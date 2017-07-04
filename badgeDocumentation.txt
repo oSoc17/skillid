@@ -1,0 +1,46 @@
+What is needed by the algorithm.
+assertion : {
+  id : IRI or URI
+  type : "Assertion"
+  recipient : {
+    type : "email"
+    identity : email of the issuer
+  }
+  issuedOn : date right now
+  verification : {
+    type : "hosted"
+  }
+  badge : {
+    id : ID of the badge. Can be different depend on the company using it.
+    type : "BadgeClass"
+    name : URI of the skill (for the moment)
+    description : URI of the skill (for the moment)
+    image : URI to the badge image. Will be automatically generated too.
+    criteria : {
+      narrative : how did they get that badge?
+    }
+    issuer : {
+      id : ID of the issuer. should be an IRI.
+      type : "Issuer"
+    }
+  }
+}
+What is needed of the user. V0.0.0
+assertion : {
+  id : URI id of the assertion. Is a string.
+  recipient : {
+    identity : email of the recipient
+  }
+  badge : {
+    id : ID of the badge. Can be different depend on the company using it.
+    name : URI of the skill (for the moment)
+    description : URI of the skill (for the moment)
+    image : URI to the badge image. Should probably be automatically handled.
+    criteria : {
+      narrative : how did they get that badge?
+    }
+    issuer : {
+      id : ID of the issuer. should be an IRI.
+    }
+  }
+}
