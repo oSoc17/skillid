@@ -10,7 +10,7 @@ export default {
      }
    },
   methods: {
-    submit: function () {
+    submit: function (events) {
       console.log("submitted");
     },
 
@@ -19,14 +19,19 @@ export default {
       while (list.firstChild) {
         list.removeChild(list.firstChild);
       }
-      fetch(`http://esp-api-dev-0.10.0.cogni.zone/search?text=${this.searchValue}&language=en&type=skill&facet=type&facet=isInScheme`, {
-	       method: 'get'
-       }).then(r => r.json())
-       .then(result => {
-         if(result){
-           result._embedded.results.forEach(r => this.addNewElement(r))
-         }
-       });
+      if(this.searchValue.length > 3) {
+        let fetched = fetch(`http://esp-api-dev-0.10.0.cogni.zone/search?text=${this.searchValue}&language=en&type=skill&facet=type&facet=isInScheme`, {
+  	       method: 'get'
+         })
+
+         let promis = fetched.then(r => r.json())
+         let resultsObject = promis.then(result => {
+           if(result){
+             result._embedded.results.forEach(r => this.addNewElement(r))
+           }
+         });
+      }
+
     },
 
     addNewElement: function (r) {
@@ -34,7 +39,7 @@ export default {
     },
 
     handleImage: function () {
-      let selectedFile = document.getElementById('input').files[0];
+      let selectedFile = document.getElementById('image-input').files[0];
       console.log(selectedFile);
       let image = document.getElementById('image');
       image.file = selectedFile;
