@@ -31,6 +31,16 @@ export default {
 
     addNewElement: function (r) {
       this.searchResults.push(r.title);
+    },
+
+    handleImage: function () {
+      let selectedFile = document.getElementById('input').files[0];
+      console.log(selectedFile);
+      let image = document.getElementById('image');
+      image.file = selectedFile;
+      var reader = new FileReader();
+      reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(image);
+      reader.readAsDataURL(selectedFile);
     }
   }
 

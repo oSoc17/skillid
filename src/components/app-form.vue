@@ -18,6 +18,9 @@
 
       <label for="searchField">Reason why the recipient deserves the badge</label>
 			<textarea name="description" rows="4" cols="50"></textarea>
+      <input type="file" v-on:change="handleImage" id="input">
+      <img id="image"/>
+      <button v-on:click="submit">Sign</button>
 
       <button v-on:click="submit">Generate</button>
     </form>
