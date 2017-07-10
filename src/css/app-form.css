@@ -1,0 +1,36 @@
+#form {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
+#app-form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-left:auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+#app-form label {
+  margin-bottom: 1rem;
+}
+
+#app-form input {
+  margin-bottom: 1.5rem;
+}
+
+#app-form button {
+  width: 20%;
+  margin-left:auto;
+  margin-right: auto;
+  margin-top: 1.5rem;
+}
+
+h1, h2 {
+  font-weight: normal;
+}
