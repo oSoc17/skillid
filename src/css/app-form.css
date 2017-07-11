@@ -10,7 +10,6 @@
 #app-form {
   display: flex;
   flex-direction: column;
-  width: 50%;
   margin-left:auto;
   margin-right: auto;
   text-align: left;
@@ -33,4 +32,10 @@
 
 h1, h2 {
   font-weight: normal;
+}
+
+.company-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
 }

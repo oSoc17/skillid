@@ -43,22 +43,25 @@ export default {
       let input = document.getElementById('image-input');
       let file  = input.files[0];
       let img = new Image();
-
       img.onload = function() {
-        var sizes = {
+        let sizes = {
           width:this.width,
           height: this.height
         };
-        URL.revokeObjectURL(this.src);
 
-        console.log('onload: sizes', sizes);
-        console.log('onload: this', this);
+        if(sizes.width < 480 && sizes.height < 150){
+          let confirmBox = confirm("Are you sure you want to continue?")
+
+          if(confirmBox === true) {
+            this.displayImage(file, img);
+          }
+        }
       }
+      this.displayImage(file, img);
+    },
 
+    displayImage: function (file, img) {
       var objectURL = URL.createObjectURL(file);
-
-      console.log('change: file', file);
-      console.log('change: objectURL', objectURL);
       img.src = objectURL;
 
       let image = document.getElementById('image');
