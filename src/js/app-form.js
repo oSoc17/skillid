@@ -25,6 +25,7 @@ export default {
          })
 
          let promis = fetched.then(r => r.json())
+
          let resultsObject = promis.then(result => {
            if(result){
              result._embedded.results.forEach(r => this.addNewElement(r))
@@ -39,13 +40,32 @@ export default {
     },
 
     handleImage: function () {
-      let selectedFile = document.getElementById('image-input').files[0];
-      console.log(selectedFile);
+      let input = document.getElementById('image-input');
+      let file  = input.files[0];
+      let img = new Image();
+
+      img.onload = function() {
+        var sizes = {
+          width:this.width,
+          height: this.height
+        };
+        URL.revokeObjectURL(this.src);
+
+        console.log('onload: sizes', sizes);
+        console.log('onload: this', this);
+      }
+
+      var objectURL = URL.createObjectURL(file);
+
+      console.log('change: file', file);
+      console.log('change: objectURL', objectURL);
+      img.src = objectURL;
+
       let image = document.getElementById('image');
-      image.file = selectedFile;
+      image.file = file;
       var reader = new FileReader();
       reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(image);
-      reader.readAsDataURL(selectedFile);
+      reader.readAsDataURL(file);
     }
   }
 
