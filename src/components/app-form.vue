@@ -20,7 +20,7 @@
 			<textarea name="description" rows="4" cols="50"></textarea>
 
       <div class="company-info">
-        <input type="file" v-on:change="handleImage" id="image-input" accept="image/png, image/jpeg, image/tiff, image/gif">
+        <input type="file" v-on:change="handleImage" id="image-input" accept="image/png, image/jpeg, image/tiff, image/gif, image/svg+xml">
         <img id="image"/>
         <label for="company-name">Company name</label>
         <input type="text" name="company-name" >

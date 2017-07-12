@@ -43,30 +43,31 @@ export default {
       let input = document.getElementById('image-input');
       let file  = input.files[0];
       let img = new Image();
-      img.onload = function() {
-        let sizes = {
-          width:this.width,
-          height: this.height
-        };
-
-        if(sizes.width < 480 && sizes.height < 150){
-          let confirmBox = confirm("Are you sure you want to continue?")
-
-          if(confirmBox === true) {
-            this.displayImage(file, img);
-          }
-        }
-      }
-      this.displayImage(file, img);
-    },
-
-    displayImage: function (file, img) {
       var objectURL = URL.createObjectURL(file);
       img.src = objectURL;
 
+      img.onload = () => {
+        let sizes = {
+          width:img.width,
+          height: img.height
+        };
+        console.log(file.type.match('image.*'));
+        if(sizes.width < 480 && sizes.height < 150){
+          let confirmBox = confirm("Are you sure you want to continue?")
+          if(confirmBox === true) {
+            this.displayImage(file, img);
+          }
+
+        }else {
+            this.displayImage(file, img);
+        }
+      };
+    },
+
+    displayImage: function (file, img) {
       let image = document.getElementById('image');
       image.file = file;
-      var reader = new FileReader();
+      let reader = new FileReader();
       reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(image);
       reader.readAsDataURL(file);
     }
