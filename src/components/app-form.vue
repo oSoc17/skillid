@@ -19,7 +19,18 @@
       <label for="searchField">Reason why the recipient deserves the badge</label>
 			<textarea name="description" rows="4" cols="50"></textarea>
 
-      <button v-on:click="submit">Generate</button>
+      <div class="company-info">
+        <input type="file" v-on:change="handleImage" id="image-input" accept="image/png, image/jpeg, image/tiff, image/gif, image/svg+xml">
+        <img id="image"/>
+        <label for="company-name">Company name</label>
+        <input type="text" name="company-name" >
+        <label for="url">Url image</label>
+        <input type="url" name="url" >
+      </div>
+
+      <button v-on:click.prevent="submit">Sign</button>
+
+      <button v-on:click.prevent="submit">Generate</button>
     </form>
   </div>
 </template>

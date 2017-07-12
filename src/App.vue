@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <h1>Skillid</h1>
-    <app-form></app-form>
+    <div class="content-container">
+      <app-badge></app-badge>
+      <app-form></app-form>
+    </div>
+
   </div>
 </template>
 
