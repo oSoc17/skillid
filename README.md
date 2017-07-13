@@ -1,9 +1,16 @@
 # skillid
 Team Domino's Badge Designer
 
-## Elevator pitch
 
-For various reasons (correspondence between different Nations, easiness of testing, ...) skills are taking over diplomas job. The question is how do we verify that people have the skills, as requiring everyone to send dozens if not hundreds of proofs (each with their own particular data model), one for each skills is not viable. As to simplify the whole thing, Mozzila made a standard, that is called Open Badge. Now there still exist a problem with that standard, it's that it's relatively complex of to use as is, require an image (which require a designer) and is not standardized (someone might give a skill for punctuality, another for arriving on time, ...). As to solve this problem, and make it possible for the layman to give badges, we are building a badge generator linked to ESCO, which is an European standard for skills.
+## Project context
+Our project is about OpenBadges. What are OpenBadges? These are virtual badges, which are used to endorse someone’s skills. For instance, you work at HR and want to endorse an employee’s skill, that holds value and is recognizable. I’ll suggest you to use a badge. Cool, but how can you build a badge if you are not a designer? And that’s our project: We are creating an easy-to-use badge builder, to help companies to endorse employee’s skills.
+
+In order to create a valuable and reliable badge we are using the ESCO standard for naming skills which is represented in the visual part. For the structure we rely on OpenBadges.
+
+To build a badge, the builder just needs the user to enter some basic data, select the skill with our ESCO search field and press Enter. And that’s it. Of course, as a company, you can add your brand to the badge, with your colors and logo.
+
+It looks easy ? This is our promise : an easy-to-use badge builder.
+
 
 ## Build Setup
 
