@@ -21,7 +21,7 @@
 
       <div class="company-info">
         <input type="file" v-on:change="handleImage" id="image-input" accept="image/png, image/jpeg, image/tiff, image/gif">
-        <img id="image"/>
+        <img id="image" style="max-width:100px; max-height:50px;"/>
         <label for="company-name">Company name</label>
         <input type="text" name="company-name" >
         <label for="url">Url image</label>
