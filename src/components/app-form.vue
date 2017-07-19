@@ -1,36 +1,97 @@
 <template>
   <div id="form">
     <form id="app-form" class="form">
-      <h1>{{ title }}</h1>
-			<label for="website">Website of the issuer</label>
-			<input type="text" name="website" v-model="websiteValue">
+      <h1 class="form-title">{{ currentTitle }}</h1>
 
-			<label for="e-mail">E-mail of the recipient</label>
-			<input type="email" name="e-mail" v-model="emailValue">
+      <nav id="navigation">
+        <ol class="nav-list">
+          <li v-bind:class="{actif: searchActif}">1. Search skill</li>
+          <li v-bind:class="{actif: metaDataActif}">2. Meta data</li>
+          <li v-bind:class="{actif: personalizeActif}">3. Personalize badge</li>
+        </ol>
+      </nav>
 
-			<label for="searchField">Search skill</label>
-      <input class="searchField" type="text" name="searchField" v-model="searchValue" v-on:keyup="onChangeSearch">
-			<ol class="list">
-        <li v-for="searchResult in searchResults">
-          {{ searchResult }}
-        </li>
-      </ol>
-
-      <label for="searchField">Reason why the recipient deserves the badge</label>
-			<textarea name="description" rows="4" cols="50"></textarea>
-
-      <div class="company-info">
-        <input type="file" v-on:change="handleImage" id="image-input" accept="image/png, image/jpeg, image/tiff, image/gif">
-        <img id="image" style="max-width:100px; max-height:50px;"/>
-        <label for="company-name">Company name</label>
-        <input type="text" name="company-name" >
-        <label for="url">Url image</label>
-        <input type="url" name="url" >
+      <div class = "search-content" v-show='searchActif'>
+        <label for="searchField">What are you looking for?</label>
+        <div class="">
+          <input class="searchField" type="text" name="searchField" v-model="searchValue" v-on:keyup="onChangeSearch">
+          <button class="search-button" type="button" name="button">Search</button>
+        </div>
+  			<ol class="list">
+          <li v-for="searchResult in searchResults">
+            {{ searchResult }}
+          </li>
+        </ol>
       </div>
 
-      <button v-on:click.prevent="submit">Sign</button>
+      <div class="meta-data-content" v-show='metaDataActif'>
 
-      <button v-on:click.prevent="generation">Generate</button>
+        <div class="meta-data-form-particle">
+          <h2>Your info</h2>
+
+          <div class="meta-data-form-particle-input">
+            <label for="issuer-name">Full name issuer</label>
+      			<input type="text" name="issuer-name" v-model="issuerNameValue">
+
+            <label for="website">Website url issuer</label>
+      			<input type="text" name="website" v-model="websiteValue">
+          </div>
+        </div>
+
+        <div class="meta-data-form-particle">
+          <h2>Receivers info</h2>
+
+          <div class="meta-data-form-particle-input">
+            <label for="receiver-name">Full name receiver</label>
+      			<input type="text" name="receiver-name" v-model="receiverNameValue">
+
+      			<label for="e-mail">E-mail of the recipient</label>
+      			<input type="email" name="e-mail" v-model="emailValue">
+          </div>
+        </div>
+        <div class="meta-data-form-particle">
+          <h2>Why</h2>
+
+          <div class="meta-data-form-particle-input">
+            <label for="description">Description why the recipient deserves the badge</label>
+      			<textarea class="description" name="description" rows="4" cols="50"></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="personalize-content" v-show='personalizeActif'>
+        <div class="personalize-content-labels">
+          <label v-on:click.prevent="changeStateInputField('imageInputActif')" for="company-logo">Add company logo</label>
+          <label v-on:click.prevent="changeStateInputField('companyNameInput')" for="company-name">Add company name</label>
+          <label v-on:click.prevent="changeStateInputField('urlInput')" for="url">Add url to company logo</label>
+          <label v-on:click.prevent="changeStateInputField('colorInput')" for="color">Change color</label>
+        </div>
+        <div class="personalize-content-inputs">
+          <div class="input-field" v-bind:class="{hiddenInput: imageInputActif}">
+            <label for="company-logo">Company logo</label>
+            <input type="file" v-on:change="handleImage" id="image-input" accept="image/png, image/jpeg, image/tiff, image/gif">
+          </div>
+
+          <div class="input-field" v-bind:class="{hiddenInput: companyNameInput}">
+            <label for="company-name">Company name</label>
+            <input type="text" name="company-name">
+          </div>
+
+          <div class="input-field" v-bind:class="{hiddenInput: urlInput}">
+            <label for="url">Url</label>
+            <input type="url" name="url">
+          </div>
+
+          <div class="input-field" v-bind:class="{hiddenInput: colorInput}">
+            <label for="color">Color</label>
+            <input type="text" name="color">
+          </div>
+        </div>
+      </div>
+
+      <button v-on:click.prevent="back">Back</button>
+      <button v-on:click.prevent="submit">{{ currentButtonText }}</button>
     </form>
   </div>
 </template>
