@@ -54,10 +54,11 @@
 
           <div class="meta-data-form-particle-input">
             <label for="description">Description why the recipient deserves the badge</label>
-      			<textarea class="description" name="description" rows="4" cols="50"></textarea>
+      			<textarea class="description" name="description" rows="4" cols="50" v-model="descriptionValue"></textarea>
           </div>
 
         </div>
+        <label id="errorLabel" style="display: none">Didn't work</label>
       </div>
 
       <div id="personalize-content" v-show='personalizeActif'>
