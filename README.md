@@ -3,13 +3,13 @@ Team Domino's Badge Designer
 
 
 ## Project context
-Our project is about OpenBadges. What are OpenBadges? These are virtual badges, which are used to endorse someone’s skills. For instance, you work at HR and want to endorse an employee’s skill, that holds value and is recognizable. I’ll suggest you to use a badge. Cool, but how can you build a badge if you are not a designer? And that’s our project: We are creating an easy-to-use badge builder, to help companies to endorse employee’s skills.
+Our project is about Open Badges. What are Open Badges? These are virtual badges, which are used to endorse someone’s skills. For instance, you work at HR and want to endorse an employee’s skill. I suggest you  use a badge. It holds value and is recognizable. Cool, you say, but how can you build a badge if you are not a designer? And that’s our project: an easy-to-use badge builder, to help companies endorse their employee’s skills.
 
-In order to create a valuable and reliable badge we are using the ESCO standard for naming skills which is represented in the visual part. For the structure we rely on OpenBadges.
+In order to create a valuable and reliable badge we are using the ESCO standard for naming skills. The skill is represented in the visual part by its official name. For the structure we rely on Open Badges.
 
 To build a badge, the builder just needs the user to enter some basic data, select the skill with our ESCO search field and press Enter. And that’s it. Of course, as a company, you can add your brand to the badge, with your colors and logo.
 
-It looks easy ? This is our promise : an easy-to-use badge builder.
+Looks easy ? This is our promise : it is easy!
 
 
 ## Build Setup
