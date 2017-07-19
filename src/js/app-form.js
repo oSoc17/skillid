@@ -29,6 +29,53 @@ export default {
      }
    },
   methods: {
+    validation: function(){
+      function validateEmail(email) {
+        //https://stackoverflow.com/questions/46155/how-to-validate-email-address-in-javascript
+        var re = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+        return re.test(email);
+      }
+      function validateWebsite(website){
+        //https://stackoverflow.com/questions/34488170/regular-expression-in-javascript-for-valid-domain-name
+        var re = new RegExp("^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$");
+        console.log(website);
+        return re.test(website);
+      }
+      function validateIssuerName(issuerName){
+        return issuerName != "";
+      }
+      function validateReceiverName(receiverName){
+        return receiverName != "";
+      }
+      function validateDescriptionValue(descriptionValue){
+        return descriptionValue != "";
+      }
+      var returnbool = true;
+      //todo, change color?
+      if (!validateEmail(this.emailValue)){
+        returnbool=false;
+      }
+      if (!validateWebsite(this.websiteValue)){
+        returnbool=false;
+      }
+      if (!validateIssuerName(this.receiverNameValue)){
+        returnbool=false;
+      }
+      if(!validateReceiverName(this.receiverNameValue)){
+        returnbool=false;
+      }
+      if(!validateDescriptionValue(this.descriptionValue)){
+        returnbool=false;
+      }
+      if(returnbool){
+        document.getElementById("errorLabel").style.display="none";
+        return true;
+      }
+      else{
+        document.getElementById("errorLabel").style.display="block";
+        return false;
+      }
+    },
     getCorrectTag: function(href, nameChange){
       function broadestConcept(href, changeName){
         fetch(href, {
@@ -77,17 +124,22 @@ export default {
         this.currentTitle = this.titles[this.clicks];
         this.currentButtonText = this.buttonText[this.clicks];
         if(this.clicks == 1) {
+          this.searchActif = !this.searchActif;
+          this.metaDataActif = !this.metaDataActif;
           var href=this.firstHref;
           this.getCorrectTag(href, function (x){
             this.nameBadge=x;
             document.getElementById("svgFile").style.visibility="visible"
             document.getElementById(this.nameBadge).style.visibility="visible";
           }.bind(this));
-          this.searchActif = !this.searchActif;
-          this.metaDataActif = !this.metaDataActif;
         }else if (this.clicks == 2) {
-          this.metaDataActif = !this.metaDataActif;
-          this.personalizeActif = !this.personalizeActif;
+          if(this.validation()){
+            this.metaDataActif = !this.metaDataActif;
+            this.personalizeActif = !this.personalizeActif;
+          }
+          else{
+            this.clicks-=1;
+          }
         }else{
           this.clicks-=1;
           console.log("generation call");
@@ -118,8 +170,6 @@ export default {
     changeStateInputField: function (input) {
       console.log(input)
       if(input === "imageInputActif") {
-        console.log("hey")
-        console.log("hey")
         this.imageInputActif = !this.imageInputActif
       }else if(input === "companyNameInput") {
         this.companyNameInput = !this.companyNameInput
@@ -362,8 +412,6 @@ export default {
         rgb.g=Math.floor(rgb.g-res);
         return rgb;
       }
-      let input = document.getElementById('image-input');
-      let file  = input.files[0];
       var img = new Image();
       var objectURL = URL.createObjectURL(file);
       img.src = objectURL;
