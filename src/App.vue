@@ -10,4 +10,5 @@
 </template>
 
 <script src="./js/app.js"></script>
+<style src="./css/reset.css"></style>
 <style src="./css/app.css"></style>
