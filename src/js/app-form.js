@@ -15,6 +15,7 @@ export default {
       receiverNameValue: "",
       emailValue: "example@gmail.com",
       searchValue: "",
+      pickedSkill: "",
       searchResults: [],
       descriptionValue : "Got it for feeding cats",
       badge:{},
@@ -153,6 +154,52 @@ export default {
       } else {
         console.log("error in next");
       }
+
+      var resultStr= this.pickedSkill.split(" ");
+      var offset = resultStr.length%3;
+        var string1 = "";
+        var string2 = "";
+        var string3 = "";
+        if (offset==1){
+          for (var i=0; i<(resultStr.length-offset)/3; i++){
+            string1+=resultStr[i]+" ";
+          }
+          for (var i=0; i<((resultStr.length-offset)/3)+1; i++){
+            string2+=resultStr[i+((resultStr.length-offset)/3)]+" ";
+          }
+          for (var i=0; i<(resultStr.length-offset)/3; i++){
+            if (resultStr.length>3){
+              string3+=resultStr[i+1+(2*(resultStr.length-offset)/3)]+" ";
+            }
+          }
+        }
+        else if(offset==2){
+          for (var i=0; i<(1+((resultStr.length-offset)/3)); i++){
+            string1+=resultStr[i]+" ";
+          }
+          for (var i=0; i<(1+((resultStr.length-offset)/3)); i++){
+            string2+=resultStr[i+1+((resultStr.length-offset)/3)]+" ";
+          }
+          for (var i=0; i<((resultStr.length-offset)/3); i++){
+            if (resultStr.length>3){
+              string3+=resultStr[i+2+(2*(resultStr.length-offset)/3)]+" ";
+            }
+          }
+        }
+        else {
+          for (var i=0; i<(resultStr.length-offset)/3; i++){
+            string1+=resultStr[i]+" ";
+          }
+          for (var i=0; i<((resultStr.length-offset)/3); i++){
+            string2+=resultStr[i+((resultStr.length-offset)/3)]+" ";
+          }
+          for (var i=0; i<(resultStr.length-offset)/3; i++){
+            string3+=resultStr[i+(2*(resultStr.length-offset)/3)]+" ";
+          }
+        }
+        document.getElementById("text1").textContent = string1;
+        document.getElementById("text2").textContent = string2;
+        document.getElementById("text3").textContent = string3;
     },
 
     back: function () {
@@ -173,7 +220,6 @@ export default {
       }
     },
     changeStateInputField: function (input) {
-      console.log(input)
       if(input === "imageInputActif") {
         this.imageInputActif = !this.imageInputActif
       }else if(input === "companyNameInput") {
@@ -300,6 +346,11 @@ export default {
       }.bind(this))
     },
 
+    setPickedValue: function (event) {
+      this.pickedSkill = event.currentTarget.innerHTML;
+      console.log(event.currentTarget.innerHTML);
+    },
+
     onChangeSearch: function () {
       document.getElementById("svgFile").style.visibility="hidden"
       document.getElementById(this.nameBadge).style.visibility="hidden"
@@ -307,52 +358,7 @@ export default {
       while (list.firstChild) {
         list.removeChild(list.firstChild);
       }
-      if(this.searchValue.length > 3) {
-        var resultStr= this.searchValue.split(" ");
-        var offset = resultStr.length%3;
-          var string1 = "";
-          var string2 = "";
-          var string3 = "";
-          if (offset==1){
-            for (var i=0; i<(resultStr.length-offset)/3; i++){
-              string1+=resultStr[i]+" ";
-            }
-            for (var i=0; i<((resultStr.length-offset)/3)+1; i++){
-              string2+=resultStr[i+((resultStr.length-offset)/3)]+" ";
-            }
-            for (var i=0; i<(resultStr.length-offset)/3; i++){
-              if (resultStr.length>3){
-                string3+=resultStr[i+1+(2*(resultStr.length-offset)/3)]+" ";
-              }
-            }
-          }
-          else if(offset==2){
-            for (var i=0; i<(1+((resultStr.length-offset)/3)); i++){
-              string1+=resultStr[i]+" ";
-            }
-            for (var i=0; i<(1+((resultStr.length-offset)/3)); i++){
-              string2+=resultStr[i+1+((resultStr.length-offset)/3)]+" ";
-            }
-            for (var i=0; i<((resultStr.length-offset)/3); i++){
-              if (resultStr.length>3){
-                string3+=resultStr[i+2+(2*(resultStr.length-offset)/3)]+" ";
-              }
-            }
-          }
-          else {
-            for (var i=0; i<(resultStr.length-offset)/3; i++){
-              string1+=resultStr[i]+" ";
-            }
-            for (var i=0; i<((resultStr.length-offset)/3); i++){
-              string2+=resultStr[i+((resultStr.length-offset)/3)]+" ";
-            }
-            for (var i=0; i<(resultStr.length-offset)/3; i++){
-              string3+=resultStr[i+(2*(resultStr.length-offset)/3)]+" ";
-            }
-          }
-          document.getElementById("text1").textContent = string1;
-          document.getElementById("text2").textContent = string2;
-          document.getElementById("text3").textContent = string3;
+
         let fetched = fetch(`http://esp-api-dev-0.10.0.cogni.zone/search?text=${this.searchValue}&language=`+this.language+`&type=skill&facet=type&facet=isInScheme`, {
   	       method: 'get'
         })
@@ -365,7 +371,6 @@ export default {
             result._embedded.results.forEach(r => this.addNewElement(r));
           }
         });
-      }
     },
     addNewElement: function (r) {
       if (this.count===0){
@@ -410,7 +415,7 @@ export default {
           rgb.g += data[i+1];
           rgb.b += data[i+2];
         }
-  
+
         // floor the average values to give correct rgb values (ie: round number values)
         rgb.r = rgb.r/count;
         rgb.g = rgb.g/count;
@@ -450,7 +455,7 @@ export default {
             for(var i=0; i<x.length; i++){
               x[i].style.fill=rgbString;
             };
-          }.bind(this); 
+          }.bind(this);
         }.bind(this))(stuff);
         reader.readAsDataURL(file);
       };

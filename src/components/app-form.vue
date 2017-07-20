@@ -14,12 +14,12 @@
       <div class = "search-content" v-show='searchActif'>
         <label for="searchField">What are you looking for?</label>
         <div class="">
-          <input class="searchField" type="text" name="searchField" v-model="searchValue" v-on:keyup="onChangeSearch">
-          <button class="search-button" type="button" name="button">Search</button>
+          <input class="searchField" type="text" name="searchField" v-model="searchValue"/>
+          <button v-on:click="onChangeSearch" class="search-button" type="button" name="button">Search</button>
         </div>
   			<ol class="list">
           <li v-for="searchResult in searchResults">
-            {{ searchResult }}
+            <a href="#" v-on:click="setPickedValue">{{ searchResult }}</a>
           </li>
         </ol>
       </div>
@@ -93,7 +93,7 @@
       </div>
 
       <div class="buttons">
-        <button class="back-button" v-on:click.prevent="back"> &#60; Back</button>
+        <button class="back-button" v-on:click.prevent="back"> &#x25C0 Back</button>
         <button v-on:click.prevent="submit">{{ currentButtonText }}</button>
       </div>
     </form>
