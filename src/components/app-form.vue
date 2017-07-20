@@ -72,7 +72,7 @@
         <div class="personalize-content-inputs">
           <div class="input-field" v-bind:class="{hiddenInput: imageInputActif}">
             <label for="company-logo">Company logo</label>
-            <input  type="file" v-on:change="handleImage" name="company-logo" accept="image/png, image/jpeg, image/tiff, image/gif">
+            <input  type="file" v-on:change="handleImage" id="image-input" name="company-logo" accept="image/png, image/jpeg, image/tiff, image/gif">
           </div>
 
           <div class="input-field" v-bind:class="{hiddenInput: companyNameInput}">
