@@ -421,6 +421,8 @@ export default {
         rgb.g=Math.floor(rgb.g-res);
         return rgb;
       }
+      let input = document.getElementById('image-input');
+      let file = input.files[0];
       var img = new Image();
       var objectURL = URL.createObjectURL(file);
       img.src = objectURL;
