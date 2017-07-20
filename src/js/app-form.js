@@ -348,7 +348,7 @@ export default {
 
     setPickedValue: function (event) {
       this.pickedSkill = event.currentTarget.innerHTML;
-      console.log(event.currentTarget.innerHTML);
+      event.currentTarget.classList.toggle("actifLink");
     },
 
     onChangeSearch: function () {

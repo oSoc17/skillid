@@ -5,11 +5,11 @@
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  width: 50%;
+  width: 40%;
 }
 
-.svg-badge {
-  width: 43rem;
-  height: 43rem;
-  margin-top: 10rem; 
+#svgFile {
+  width: 33rem;
+  height: 33rem;
+  margin-top: 10rem;
 }
