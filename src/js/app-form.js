@@ -124,14 +124,19 @@ export default {
         this.currentTitle = this.titles[this.clicks];
         this.currentButtonText = this.buttonText[this.clicks];
         if(this.clicks == 1) {
-          this.searchActif = !this.searchActif;
-          this.metaDataActif = !this.metaDataActif;
-          var href=this.firstHref;
-          this.getCorrectTag(href, function (x){
-            this.nameBadge=x;
-            document.getElementById("svgFile").style.visibility="visible"
-            document.getElementById(this.nameBadge).style.visibility="visible";
-          }.bind(this));
+          if (this.searchValue.length>3){
+            this.searchActif = !this.searchActif;
+            this.metaDataActif = !this.metaDataActif;
+            var href=this.firstHref;
+            this.getCorrectTag(href, function (x){
+              this.nameBadge=x;
+              document.getElementById("svgFile").style.visibility="visible";
+              document.getElementById(this.nameBadge).style.visibility="visible";
+            }.bind(this));
+          }
+          else{
+            this.clicks-=1;
+          }
         }else if (this.clicks == 2) {
           if(this.validation()){
             this.metaDataActif = !this.metaDataActif;
@@ -220,10 +225,14 @@ export default {
         }
         console.log.bind(signing.call(this, "data"));
       }
+      function uuidv4() {
+        //https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+        return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+          (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16))
+      }
       //signingComplete.call(this);
       let href= "http://esp-api-dev-0.10.0.cogni.zone/resource/skill?uri=http://data.europa.eu/esco/skill/3233330f-bb93-47ea-93b4-ed903d05d9f1&language=fr";
-      var assertionVar = "todo UUID";
-      //might require the client to do so.
+      var assertionVar = uuidv4();
       var d = new Date();
       var date = d.toISOString();
       var s = new XMLSerializer().serializeToString(document.getElementById("svgFile"))
