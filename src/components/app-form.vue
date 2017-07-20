@@ -49,6 +49,7 @@
       			<input type="email" name="e-mail" v-model="emailValue">
           </div>
         </div>
+
         <div class="meta-data-form-particle">
           <h2>Why</h2>
 
@@ -63,15 +64,15 @@
 
       <div id="personalize-content" v-show='personalizeActif'>
         <div class="personalize-content-labels">
-          <label v-on:click.prevent="changeStateInputField('imageInputActif')" for="company-logo">Add company logo</label>
-          <label v-on:click.prevent="changeStateInputField('companyNameInput')" for="company-name">Add company name</label>
-          <label v-on:click.prevent="changeStateInputField('urlInput')" for="url">Add url to company logo</label>
-          <label v-on:click.prevent="changeStateInputField('colorInput')" for="color">Change color</label>
+          <label v-on:click.prevent="changeStateInputField('imageInputActif')" for="company-logo">Add company logo <br><img class="label-icon" src="../assets/svg/company.svg" alt="" ></label>
+          <label v-on:click.prevent="changeStateInputField('companyNameInput')" for="company-name">Add company name <br> <img class="label-icon" src="../assets/svg/company-name.svg" alt="" ></label>
+          <label v-on:click.prevent="changeStateInputField('urlInput')" for="url">Add url to company logo <br><img class="label-icon" src="../assets/svg/url.svg" alt="" ></label>
+          <label v-on:click.prevent="changeStateInputField('colorInput')" for="color">Change color<br><img class="label-icon" src="../assets/svg/color.svg" alt="" ></label>
         </div>
         <div class="personalize-content-inputs">
           <div class="input-field" v-bind:class="{hiddenInput: imageInputActif}">
             <label for="company-logo">Company logo</label>
-            <input type="file" v-on:change="handleImage" id="image-input" accept="image/png, image/jpeg, image/tiff, image/gif">
+            <input  type="file" v-on:change="handleImage" name="company-logo" accept="image/png, image/jpeg, image/tiff, image/gif">
           </div>
 
           <div class="input-field" v-bind:class="{hiddenInput: companyNameInput}">
@@ -91,8 +92,10 @@
         </div>
       </div>
 
-      <button v-on:click.prevent="back">Back</button>
-      <button v-on:click.prevent="submit">{{ currentButtonText }}</button>
+      <div class="buttons">
+        <button class="back-button" v-on:click.prevent="back"> &#60; Back</button>
+        <button v-on:click.prevent="submit">{{ currentButtonText }}</button>
+      </div>
     </form>
   </div>
 </template>

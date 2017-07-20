@@ -737,6 +737,8 @@
 		</g>
 		<g id="icon">
 			<circle class="st10" cx="122.5" cy="58" r="17"/>
+			<image style="overflow:visible;" width="30" height="30" id="icon_img" xlink:href=""  transform="matrix(1 0 0 1 107 43)">
+			</image>
 		</g>
 	</g>
 </switch>
