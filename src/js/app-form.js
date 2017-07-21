@@ -10,12 +10,13 @@ export default {
                 companyNameInput: true,
                 urlInput: true,
                 colorInput: true,
+                formHasErrors: false
 			},
             formContentElements:{
                 titles : ["Search", "Meta data", "Personalize"],
                 currentTitle: "Search",
                 buttonText: ["next", "next", "generate"],
-                currentButtonText: "Next",
+                currentButtonText: "Next"
             },
             formContentValues: {
                 websiteValue: "www.example.com",
@@ -24,7 +25,7 @@ export default {
                 emailValue: "example@gmail.com",
                 searchValue: "",
                 pickedSkill: "",
-                descriptionValue: "Got it for feeding cats",
+                descriptionValue: "Got it for feeding cats"
             },
 			titles : ["Search", "Meta data", "Personalize"],
 			currentTitle: "Search",
@@ -73,32 +74,14 @@ export default {
 				return descriptionValue !== "";
 			}
 
-			let returnbool = true;
 			//todo, change color?
-			if (!validateEmail(this.emailValue)){
-				returnbool=false;
-			}
-			if (!validateWebsite(this.websiteValue)){
-				returnbool=false;
-			}
-			if (!validateIssuerName(this.receiverNameValue)){
-				returnbool=false;
-			}
-			if(!validateReceiverName(this.receiverNameValue)){
-				returnbool=false;
-			}
-			if(!validateDescriptionValue(this.descriptionValue)){
-				returnbool=false;
-			}
 
-			if(returnbool){
-				document.getElementById("errorLabel").style.display="none";
-				return true;
-			}
-			else{
-				document.getElementById("errorLabel").style.display="block";
-				return false;
-			}
+            this.formControlElements.formHasErrors=
+                validateEmail(this.emailValue) ||
+			    validateWebsite(this.websiteValue) ||
+                validateIssuerName(this.receiverNameValue) ||
+                validateReceiverName(this.receiverNameValue) ||
+                validateDescriptionValue(this.descriptionValue);
 	    },
 		getCorrectTag: function(href, nameChange){
             function broadestConcept(href, changeName){
