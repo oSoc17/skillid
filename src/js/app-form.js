@@ -1,6 +1,6 @@
 export default {
 	name: 'app-form',
-	data() {
+    data() {
 		return {
 			formControlElements: {
 				searchActive: true,
