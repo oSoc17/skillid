@@ -52,7 +52,7 @@
   <div id="app-badge-container">
     <h1>Badge</h1>
 
-    <svg class="svgFile" id="svgFile" version="1.1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+    <svg v-bind:visibility="" class="svgFile" id="svgFile" version="1.1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 245 245"
 	 style="enable-background:new 0 0 245 245; visibility: hidden" xml:space="preserve">
 <switch>
