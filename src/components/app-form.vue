@@ -13,8 +13,8 @@
 
           <div class = "search-content" v-show='formControlElements.searchActive'>
               <label for="searchField">What are you looking for?</label>
-              <div class="">
-                  <input class="searchField" type="text" name="searchField" v-model="searchValue"/>
+              <div>
+                  <input class="searchField" type="text" name="searchField" v-model="formContentValues.searchValue"/>
                   <button @click="onChangeSearch" class="search-button" type="button" name="button">Search</button>
               </div>
                   <ol class="list">
@@ -30,10 +30,10 @@
                   <h2>Your info</h2>
                   <div class="meta-data-form-particle-input">
                       <label for="issuer-name">Full name issuer</label>
-                      <input type="text" name="issuer-name" v-model="issuerNameValue">
+                      <input type="text" name="issuer-name" v-model="formContentValues.issuerNameValue">
 
                       <label for="website">Website url issuer</label>
-                      <input type="text" name="website" v-model="websiteValue">
+                      <input type="text" name="website" v-model="formContentValues.websiteValue">
                   </div>
               </div>
 
@@ -45,7 +45,7 @@
                       <input type="text" name="receiver-name" v-model="receiverNameValue">
 
                       <label for="e-mail">E-mail of the recipient</label>
-                      <input type="email" name="e-mail" v-model="emailValue">
+                      <input type="email" name="e-mail" v-model="formContentValues.emailValue">
                   </div>
               </div>
               <div class="meta-data-form-particle">
@@ -53,7 +53,7 @@
 
                   <div class="meta-data-form-particle-input">
                       <label for="description">Description why the recipient deserves the badge</label>
-                      <textarea class="description" name="description" rows="4" cols="50" v-model="descriptionValue"></textarea>
+                      <textarea class="description" name="description" rows="4" cols="50" v-model="formContentValues.descriptionValue"></textarea>
                   </div>
               </div>
               <label id="errorLabel" v-show ='formControlElements.formHasErrors' >Didn't work</label>

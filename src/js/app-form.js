@@ -28,25 +28,12 @@ export default {
                 descriptionValue: "Got it for feeding cats"
             },
 			clicks: 0,
-			buttonText: ["next", "next", "generate"],
-			currentButtonText: "Next",
-			websiteValue: "www.example.com",
-			issuerNameValue: "",
-			receiverNameValue: "",
-			emailValue: "example@gmail.com",
-			searchValue: "",
-			pickedSkill: "",
 			searchResults: [],
-			descriptionValue: "Got it for feeding cats",
 			badge: {},
-			imageInputActive: true,
-			companyNameInput: true,
-			urlInput: true,
-			colorInput: true,
 			nameBadge: "round_language",
 			firstHref: "",
-			count: 0,
-			language: "en"
+            count: 0,
+			locale: "en"
 		}
 	},
 	methods: {
@@ -75,11 +62,11 @@ export default {
 			//todo, change color?
 
             this.formControlElements.formHasErrors =
-                isValidEmail(this.emailValue) &&
-			    isValidWebsite(this.websiteValue) &&
-                hasIssuerName(this.receiverNameValue) &&
-                hasReceiverName(this.receiverNameValue) &&
-                hasDescriptionValue(this.descriptionValue);
+                isValidEmail(this.formContentValues.emailValue) &&
+			    isValidWebsite(this.formContentValues.websiteValue) &&
+                hasIssuerName(this.formContentValues.issuerNameValue) &&
+                hasReceiverName(this.formContentValues.receiverNameValue) &&
+                hasDescriptionValue(this.formContentValues.descriptionValue);
 			return this.formControlElements.formHasErrors;
 	    },
 		getCorrectTag: function(href, nameChange){
@@ -129,9 +116,9 @@ export default {
             if(this.clicks < 3) {
                 this.clicks += 1;
                 this.formContentElements.currentTitle = this.formContentElements.titles[this.clicks];
-                this.currentButtonText = this.buttonText[this.clicks];
+                this.formContentElements.currentButtonText = this.formContentElements.buttonText[this.clicks];
                 if(this.clicks === 1) {
-                    if (this.searchValue.length>3){
+                    if (this.formContentValues.searchValue.length>3){
                         this.toggleSearchActive();
                         this.toggleMetaDataActive();
                         let href=this.firstHref;
@@ -164,7 +151,7 @@ export default {
             }
 
             document.getElementById("text1").textContent = string1;
-            let resultStr= this.pickedSkill.split(" ");
+            let resultStr= this.formContentValues.pickedSkill.split(" ");
             let offset = resultStr.length % 3;
             let string1 = "";
             let string2 = "";
@@ -213,7 +200,7 @@ export default {
             if(this.clicks < 3 && this.clicks > 0) {
                 this.clicks -= 1;
                 this.formContentElements.currentTitle = this.formContentElements.titles[this.clicks];
-                this.currentButtonText = this.buttonText[this.clicks];
+                this.formContentElements.currentButtonText = this.formContentElements.buttonText[this.clicks];
                 this.toggleMetaDataActive();
                 switch (this.clicks){
                     case 0:
@@ -332,7 +319,7 @@ export default {
                 return buf;
             }
 
-            let buf =str2ab(this.emailValue);
+            let buf =str2ab(this.formContentValues.emailValue);
             crypto.subtle.digest("SHA-256", buf).then(function(resultHash){
                 let resHash=ab2str(resultHash);
                 fetch(href, {
@@ -355,20 +342,20 @@ export default {
                                     type : "signed"
                                 },
                                 badge: {
-                                    id : this.websiteValue+" "+title,
+                                    id : this.formContentValues.websiteValue + " " + title,
                                     type : "BadgeClass",
                                     name : title,
                                     description : descriptionSkill+" ESCO database URI : "+referenceURI.substring(4, referenceURI.length-1),
                                     image : imageURI,
                                     criteria : {
-                                        narrative : this.descriptionValue
+                                        narrative : this.formContentValues.descriptionValue
                                     },
                                     issuer : {
-                                        id : this.websiteValue,
+                                        id : this.formContentValues.websiteValue,
                                         type : "Issuer",
-                                        name : this.websiteValue,
-                                        url : this.websiteValue,
-                                        email : this.websiteValue
+                                        name : this.formContentValues.websiteValue,
+                                        url : this.formContentValues.websiteValue,
+                                        email : this.formContentValues.websiteValue
                                     }
                                 }
                             };
@@ -382,7 +369,7 @@ export default {
             }.bind(this))
         },
 		setPickedValue: function (event) {
-            this.pickedSkill = event.currentTarget.innerHTML;
+            this.formContentValues.pickedSkill = event.currentTarget.innerHTML;
             event.currentTarget.classList.toggle("actifLink");
 	    },
 		onChangeSearch: function () {
@@ -393,7 +380,7 @@ export default {
 		        list.removeChild(list.firstChild);
 	        }
 
-            let fetched = fetch(`http://esp-api-dev-0.10.0.cogni.zone/search?text=${this.searchValue}&language=`+this.language+`&type=skill&facet=type&facet=isInScheme`, {
+            let fetched = fetch(`http://esp-api-dev-0.10.0.cogni.zone/search?text=${this.formContentValues.searchValue}&language=`+this.locale+`&type=skill&facet=type&facet=isInScheme`, {
                  method: 'get'
             });
 
