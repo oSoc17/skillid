@@ -29,11 +29,11 @@
               <div class="meta-data-form-particle">
                   <h2>Your info</h2>
                   <div class="meta-data-form-particle-input">
-                      <label for="issuer-name">Full name issuer</label>
-                      <input type="text" name="issuer-name" v-model="formContentValues.issuerNameValue">
+                      <label for="issuer-name">Name issuer</label>
+                      <input type="text" name="issuer-name" placeholder="Issuers name" v-model="formContentValues.issuerNameValue">
 
-                      <label for="website">Website url issuer</label>
-                      <input type="text" name="website" v-model="formContentValues.websiteValue">
+                      <label for="website">Website issuer</label>
+                      <input type="text" name="website" placeholder="www.example.com" v-model="formContentValues.websiteValue">
                   </div>
               </div>
 
@@ -41,19 +41,19 @@
                   <h2>Receivers info</h2>
 
                   <div class="meta-data-form-particle-input">
-                      <label for="receiver-name">Full name receiver</label>
-                      <input type="text" name="receiver-name" v-model="receiverNameValue">
+                      <label for="receiver-name">Name receiver</label>
+                      <input type="text" name="receiver-name" placeholder="Receivers name" v-model="formContentValues.receiverNameValue">
 
-                      <label for="e-mail">E-mail of the recipient</label>
-                      <input type="email" name="e-mail" v-model="formContentValues.emailValue">
+                      <label for="e-mail">E-mail receiver</label>
+                      <input type="email" name="e-mail" placeholder="example@gmail.com" v-model="formContentValues.emailValue">
                   </div>
               </div>
               <div class="meta-data-form-particle">
                   <h2>Why</h2>
 
                   <div class="meta-data-form-particle-input">
-                      <label for="description">Description why the recipient deserves the badge</label>
-                      <textarea class="description" name="description" rows="4" cols="50" v-model="formContentValues.descriptionValue"></textarea>
+                      <label for="description">Description why the receiver deserves the badge</label>
+                      <textarea placeholder="Got it for feeding cats" class="description" name="description" rows="4" cols="50" v-model="formContentValues.descriptionValue"></textarea>
                   </div>
               </div>
               <label id="errorLabel" v-show ='formControlElements.formHasErrors' >Didn't work</label>
@@ -91,7 +91,7 @@
 
       <div class="buttons">
         <button class="back-button" @click.prevent="back"> &#x25C0 Back</button>
-        <button @click.prevent="submit">{{ currentButtonText }}</button>
+        <button @click.prevent="submit">{{ formContentElements.currentButtonText }}</button>
       </div>
     </form>
   </div>

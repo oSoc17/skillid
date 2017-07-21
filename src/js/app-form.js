@@ -19,13 +19,13 @@ export default {
                 currentButtonText: "Next"
             },
             formContentValues: {
-                websiteValue: "www.example.com",
+                websiteValue: "",
                 issuerNameValue: "",
                 receiverNameValue: "",
-                emailValue: "example@gmail.com",
+                emailValue: "",
                 searchValue: "",
                 pickedSkill: "",
-                descriptionValue: "Got it for feeding cats"
+                descriptionValue: ""
             },
 			clicks: 0,
 			searchResults: [],
