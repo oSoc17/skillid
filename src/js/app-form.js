@@ -27,8 +27,6 @@ export default {
                 pickedSkill: "",
                 descriptionValue: "Got it for feeding cats"
             },
-			titles : ["Search", "Meta data", "Personalize"],
-			currentTitle: "Search",
 			clicks: 0,
 			buttonText: ["next", "next", "generate"],
 			currentButtonText: "Next",
@@ -52,36 +50,37 @@ export default {
 		}
 	},
 	methods: {
-		validation: function(){
-			function validateEmail(email) {
+		isValidForm: function(){
+			function isValidEmail(email) {
 				//https://stackoverflow.com/questions/46155/how-to-validate-email-address-in-javascript
 				let re = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
 				return re.test(email);
 			}
-			function validateWebsite(website){
+			function isValidWebsite(website){
 				//https://stackoverflow.com/questions/34488170/regular-expression-in-javascript-for-valid-domain-name
 				let re = new RegExp("^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$");
 				console.log(website);
 				return re.test(website);
 			}
-			function validateIssuerName(issuerName){
+			function hasIssuerName(issuerName){
 				return issuerName !== "";
 			}
-			function validateReceiverName(receiverName){
+			function hasReceiverName(receiverName){
 				return receiverName !== "";
 			}
-			function validateDescriptionValue(descriptionValue){
+			function hasDescriptionValue(descriptionValue){
 				return descriptionValue !== "";
 			}
 
 			//todo, change color?
 
             this.formControlElements.formHasErrors =
-                validateEmail(this.emailValue) ||
-			    validateWebsite(this.websiteValue) ||
-                validateIssuerName(this.receiverNameValue) ||
-                validateReceiverName(this.receiverNameValue) ||
-                validateDescriptionValue(this.descriptionValue);
+                isValidEmail(this.emailValue) &&
+			    isValidWebsite(this.websiteValue) &&
+                hasIssuerName(this.receiverNameValue) &&
+                hasReceiverName(this.receiverNameValue) &&
+                hasDescriptionValue(this.descriptionValue);
+			return this.formControlElements.formHasErrors;
 	    },
 		getCorrectTag: function(href, nameChange){
             function broadestConcept(href, changeName){
@@ -129,37 +128,37 @@ export default {
 		submit: function (events) {
             if(this.clicks < 3) {
                 this.clicks += 1;
-                this.currentTitle = this.titles[this.clicks];
-                    this.currentButtonText = this.buttonText[this.clicks];
-                    if(this.clicks === 1) {
-                        if (this.searchValue.length>3){
-                            this.toggleSearchActive();
-                            this.toggleMetaDataActive();
-                            let href=this.firstHref;
-                            this.getCorrectTag(href, function (x){
-                                this.nameBadge=x;
+                this.formContentElements.currentTitle = this.formContentElements.titles[this.clicks];
+                this.currentButtonText = this.buttonText[this.clicks];
+                if(this.clicks === 1) {
+                    if (this.searchValue.length>3){
+                        this.toggleSearchActive();
+                        this.toggleMetaDataActive();
+                        let href=this.firstHref;
+                        this.getCorrectTag(href, function (x){
+                            this.nameBadge=x;
 
-                                document.getElementById("svgFile").style.visibility="visible";
-                                document.getElementById(this.nameBadge).style.visibility="visible";
-                            }.bind(this)
-                            );
-                        }
-                        else{
-                            this.clicks-=1;
-                        }
+                            document.getElementById("svgFile").style.visibility="visible";
+                            document.getElementById(this.nameBadge).style.visibility="visible";
+                        }.bind(this)
+                        );
                     }
-                    else if (this.clicks === 2) {
-                        if(this.validation()){
-                          this.toggleMetaDataActive();
-                          this.togglePersonalizeActive();
-                        } else {
-                            this.clicks-=1;
-                        }
+                    else{
+                        this.clicks-=1;
+                    }
+                }
+                else if (this.clicks === 2) {
+                    if(this.isValidForm()){
+                      this.toggleMetaDataActive();
+                      this.togglePersonalizeActive();
                     } else {
-                      this.clicks-=1;
-                      console.log("generation call");
-                      this.generation().bind(this);
+                        this.clicks-=1;
                     }
+                } else {
+                    this.clicks-=1;
+                    console.log("generation call");
+                    this.generation().bind(this);
+                }
             } else {
                 console.log("error in next");
             }
@@ -213,7 +212,7 @@ export default {
 		back: function () {
             if(this.clicks < 3 && this.clicks > 0) {
                 this.clicks -= 1;
-                this.currentTitle = this.titles[this.clicks];
+                this.formContentElements.currentTitle = this.formContentElements.titles[this.clicks];
                 this.currentButtonText = this.buttonText[this.clicks];
                 this.toggleMetaDataActive();
                 switch (this.clicks){

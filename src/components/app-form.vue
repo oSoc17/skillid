@@ -1,13 +1,13 @@
 <template>
   <div id="form">
       <form id="app-form" class="form">
-          <h1 class="form-title">{{ currentTitle }}</h1>
+          <h1 class="form-title">{{ formContentElements.currentTitle }}</h1>
 
           <nav id="navigation">
               <ol class="nav-list">
-                  <li :class="{actif: formControlElements.searchActive}">1. Search skill</li>
-                  <li :class="{actif: formControlElements.metaDataActive}">2. Meta data</li>
-                  <li :class="{actif: formControlElements.personalizeActive}">3. Personalize badge</li>
+                  <li :class="{active: formControlElements.searchActive}">1. Search skill</li>
+                  <li :class="{active: formControlElements.metaDataActive}">2. Meta data</li>
+                  <li :class="{active: formControlElements.personalizeActive}">3. Personalize badge</li>
               </ol>
           </nav>
 
@@ -56,7 +56,7 @@
                       <textarea class="description" name="description" rows="4" cols="50" v-model="descriptionValue"></textarea>
                   </div>
               </div>
-              <label id="errorLabel" :class="{'hide' : !formControlElements.formHasErrors }" >Didn't work</label>
+              <label id="errorLabel" v-show ='formControlElements.formHasErrors' >Didn't work</label>
           </div>
 
       <div id="personalize-content" v-show='formControlElements.personalizeActive'>

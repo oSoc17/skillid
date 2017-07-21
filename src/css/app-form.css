@@ -90,7 +90,7 @@
   list-style: none;
 }
 
-.actif {
+.active {
   border-bottom: .2rem solid #0059de;
   padding-bottom: 3rem;
   padding-right: 3rem;
