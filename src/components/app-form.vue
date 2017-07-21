@@ -5,13 +5,13 @@
 
       <nav id="navigation">
         <ol class="nav-list">
-          <li v-bind:class="{actif: searchActif}">1. Search skill</li>
-          <li v-bind:class="{actif: metaDataActif}">2. Meta data</li>
-          <li v-bind:class="{actif: personalizeActif}">3. Personalize badge</li>
+          <li v-bind:class="{actif: formControlElements.searchActif}">1. Search skill</li>
+          <li v-bind:class="{actif: formControlElements.metaDataActif}">2. Meta data</li>
+          <li v-bind:class="{actif: formControlElements.personalizeActif}">3. Personalize badge</li>
         </ol>
       </nav>
 
-      <div class = "search-content" v-show='searchActif'>
+      <div class = "search-content" v-show='formControlElements.searchActif'>
         <label for="searchField">What are you looking for?</label>
         <div class="">
           <input class="searchField" type="text" name="searchField" v-model="searchValue"/>
@@ -24,7 +24,7 @@
         </ol>
       </div>
 
-      <div class="meta-data-content" v-show='metaDataActif'>
+      <div class="meta-data-content" v-show='formControlElements.metaDataActif'>
 
         <div class="meta-data-form-particle">
           <h2>Your info</h2>
@@ -62,7 +62,7 @@
         <label id="errorLabel" style="display: none">Didn't work</label>
       </div>
 
-      <div id="personalize-content" v-show='personalizeActif'>
+      <div id="personalize-content" v-show='formControlElements.personalizeActif'>
         <div class="personalize-content-labels">
           <label v-on:click.prevent="changeStateInputField('imageInputActif')" for="company-logo">Add company logo <br><img class="label-icon" src="../assets/svg/company.svg" alt="" ></label>
           <label v-on:click.prevent="changeStateInputField('companyNameInput')" for="company-name">Add company name <br> <img class="label-icon" src="../assets/svg/company-name.svg" alt="" ></label>
