@@ -1,3 +1,4 @@
+
 export default {
 	name: 'app-form',
     data() {
@@ -49,31 +50,40 @@ export default {
             console.log(website);
             return re.test(website);
         },
-        hasIssuerName: function(issuerName){
-            return issuerName !== "";
-        },
-        hasReceiverName: function(receiverName){
-            return receiverName !== "";
-        },
-        hasDescriptionValue: function(descriptionValue){
-            return descriptionValue !== "";
-        },
-		isValidForm: function(){
-            return this.isValidEmail(this.formContentValues.emailValue) &&
-                this.isValidWebsite(this.formContentValues.websiteValue) &&
-                this.hasIssuerName(this.formContentValues.issuerNameValue) &&
-                this.hasReceiverName(this.formContentValues.receiverNameValue) &&
-                this.hasDescriptionValue(this.formContentValues.descriptionValue);
-	    },
-        hasContent: function(el){
-		    if (! el.srcElement.value.trim() ){
-		        el.srcElement.focus();
-		        this.formControlElements.formHasErrors = true;
-		        this.formContentValues.errors = "This field is mandatory";
+        validateEmail: function(el){
+            if (!this.isValidEmail(this.formContentValues.emailValue)) {
+                el.srcElement.focus();
+                this.setError(true, "This is not a valid e-mailaddress");
             } else {
-                this.formControlElements.formHasErrors = false;
-                this.formContentValues.errors = "";
+                this.setError(false, "");
             }
+		},
+        validateWebsite: function(el){
+            if (!this.isValidWebsite(this.formContentValues.websiteValue)) {
+                this.setError(true, "This is not a valid website url");
+                el.srcElement.focus();
+            } else {
+                this.setError(false, "");
+            }
+        },
+        hasContent: function(el){
+            if (! el.srcElement.value.trim() ){
+                el.srcElement.focus();
+                this.setError(true, "This field is mandatory");
+            } else {
+                this.setError(false, "");
+            }
+        },
+        setError: function(hasError, errortext){
+            this.formControlElements.formHasErrors = hasError;
+            this.formContentValues.errors = errortext;
+        },
+        /**
+         * todo change isValidForm into a valid function
+         * @returns {boolean}
+         */
+        isValidForm: function(){
+            return true;
         },
 		getCorrectTag: function(href, nameChange){
             function broadestConcept(href, changeName){
@@ -123,34 +133,40 @@ export default {
                 this.clicks += 1;
                 this.formContentElements.currentTitle = this.formContentElements.titles[this.clicks];
                 this.formContentElements.currentButtonText = this.formContentElements.buttonText[this.clicks];
-                if(this.clicks === 1) {
-                    if (this.formContentValues.searchValue.length>3){
-                        this.toggleSearchActive();
-                        this.toggleMetaDataActive();
-                        let href=this.firstHref;
-                        this.getCorrectTag(href, function (x){
-                            this.nameBadge=x;
+                switch (this.clicks){
+                    case 1:
+                        if (this.formContentValues.searchValue.length>3){
+                            this.toggleSearchActive();
+                            this.toggleMetaDataActive();
 
-                            document.getElementById("svgFile").style.visibility="visible";
-                            document.getElementById(this.nameBadge).style.visibility="visible";
-                        }.bind(this)
-                        );
-                    }
-                    else{
+                            let href=this.firstHref;
+                            this.getCorrectTag(href, function (x){
+                                    this.nameBadge=x;
+
+                                    document.getElementById("svgFile").style.visibility="visible";
+                                    document.getElementById(this.nameBadge).style.visibility="visible";
+                                }.bind(this)
+                            );
+                            // todo let startpoint have focus
+                            // this.$refs.startpoint.focus();
+                        }
+                        else{
+                            this.clicks-=1;
+                        }
+                        break;
+                    case 2:
+                        if(this.isValidForm()){
+                            this.toggleMetaDataActive();
+                            this.togglePersonalizeActive();
+                        } else {
+                            this.clicks-=1;
+                        }
+                        break;
+                    default:
                         this.clicks-=1;
-                    }
-                }
-                else if (this.clicks === 2) {
-                    if(this.isValidForm()){
-                      this.toggleMetaDataActive();
-                      this.togglePersonalizeActive();
-                    } else {
-                        this.clicks-=1;
-                    }
-                } else {
-                    this.clicks-=1;
-                    console.log("generation call");
-                    this.generation().bind(this);
+                        console.log("generation call");
+                        this.generation().bind(this);
+                        break;
                 }
             } else {
                 console.log("error in next");

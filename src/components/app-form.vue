@@ -30,10 +30,10 @@
                   <h2>Your info</h2>
                   <div class="meta-data-form-particle-input">
                       <label for="issuer-name">Name issuer</label>
-                      <input type="text" name="issuer-name" placeholder="Issuers name" v-model="formContentValues.issuerNameValue">
+                      <input ref="startpoint" type="text" name="issuer-name" placeholder="Issuers name" v-model="formContentValues.issuerNameValue"  v-on:blur="hasContent">
 
                       <label for="website">Website issuer</label>
-                      <input type="text" name="website" placeholder="www.example.com" v-model="formContentValues.websiteValue">
+                      <input type="text" name="website" placeholder="www.example.com" v-model="formContentValues.websiteValue"  v-on:blur="validateWebsite">
                   </div>
               </div>
 
@@ -45,7 +45,7 @@
                       <input type="text" name="receiver-name" placeholder="Receivers name" v-model="formContentValues.receiverNameValue" v-on:blur="hasContent">
 
                       <label for="e-mail">E-mail receiver</label>
-                      <input type="email" name="e-mail" placeholder="example@gmail.com" v-model="formContentValues.emailValue" v-on:blur="hasContent">
+                      <input type="email" name="e-mail" placeholder="example@gmail.com" v-model="formContentValues.emailValue" v-on:blur="validateEmail">
                   </div>
               </div>
               <div class="meta-data-form-particle">
