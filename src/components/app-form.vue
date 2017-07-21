@@ -42,10 +42,10 @@
 
                   <div class="meta-data-form-particle-input">
                       <label for="receiver-name">Name receiver</label>
-                      <input type="text" name="receiver-name" placeholder="Receivers name" v-model="formContentValues.receiverNameValue" v-on:leave="leaveReceiverName">
+                      <input type="text" name="receiver-name" placeholder="Receivers name" v-model="formContentValues.receiverNameValue" v-on:blur="hasContent">
 
                       <label for="e-mail">E-mail receiver</label>
-                      <input type="email" name="e-mail" placeholder="example@gmail.com" v-model="formContentValues.emailValue">
+                      <input type="email" name="e-mail" placeholder="example@gmail.com" v-model="formContentValues.emailValue" v-on:blur="hasContent">
                   </div>
               </div>
               <div class="meta-data-form-particle">
@@ -53,10 +53,10 @@
 
                   <div class="meta-data-form-particle-input">
                       <label for="description">Description why the receiver deserves the badge</label>
-                      <textarea placeholder="Got it for feeding cats" class="description" name="description" rows="4" cols="50" v-model="formContentValues.descriptionValue"></textarea>
+                      <textarea placeholder="Got it for feeding cats" class="description" name="description" rows="4" cols="50" v-model="formContentValues.descriptionValue" v-on:blur="hasContent"></textarea>
                   </div>
               </div>
-              <label id="errorLabel" v-show ='formControlElements.formHasErrors' >Didn't work</label>
+              <label id="errorLabel" v-show ='formControlElements.formHasErrors' v-text="formContentValues.errors"></label>
           </div>
 
       <div id="personalize-content" v-show='formControlElements.personalizeActive'>

@@ -25,7 +25,8 @@ export default {
                 emailValue: "",
                 searchValue: "",
                 pickedSkill: "",
-                descriptionValue: ""
+                descriptionValue: "",
+                errors: ""
             },
 			clicks: 0,
 			searchResults: [],
@@ -64,8 +65,15 @@ export default {
                 this.hasReceiverName(this.formContentValues.receiverNameValue) &&
                 this.hasDescriptionValue(this.formContentValues.descriptionValue);
 	    },
-        leaveReceiverName: function(el){
-		    console.log(el);
+        hasContent: function(el){
+		    if (! el.srcElement.value.trim() ){
+		        el.srcElement.focus();
+		        this.formControlElements.formHasErrors = true;
+		        this.formContentValues.errors = "This field is mandatory";
+            } else {
+                this.formControlElements.formHasErrors = false;
+                this.formContentValues.errors = "";
+            }
         },
 		getCorrectTag: function(href, nameChange){
             function broadestConcept(href, changeName){
