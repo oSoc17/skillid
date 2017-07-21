@@ -76,7 +76,7 @@ export default {
 
 			//todo, change color?
 
-            this.formControlElements.formHasErrors=
+            this.formControlElements.formHasErrors =
                 validateEmail(this.emailValue) ||
 			    validateWebsite(this.websiteValue) ||
                 validateIssuerName(this.receiverNameValue) ||

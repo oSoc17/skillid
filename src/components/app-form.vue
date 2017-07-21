@@ -56,7 +56,7 @@
                       <textarea class="description" name="description" rows="4" cols="50" v-model="descriptionValue"></textarea>
                   </div>
               </div>
-              <label id="errorLabel" :class="{'.hide' : returnbool }" >Didn't work</label>
+              <label id="errorLabel" :class="{'.hide' : formControlElements.formHasErrors }" >Didn't work</label>
           </div>
 
       <div id="personalize-content" v-show='formControlElements.personalizeActive'>
