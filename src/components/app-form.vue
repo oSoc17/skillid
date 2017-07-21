@@ -6,7 +6,7 @@
           <nav id="navigation">
               <ol class="nav-list">
                   <li :class="{active: formControlElements.searchActive}">1. Search skill</li>
-                  <li :class="{active: formControlElements.metaDataActive}">2. Meta data</li>
+                  <li :class="{active: formControlElements.metaDataActive}">2. Metadata</li>
                   <li :class="{active: formControlElements.personalizeActive}">3. Personalize badge</li>
               </ol>
           </nav>
@@ -42,7 +42,7 @@
 
                   <div class="meta-data-form-particle-input">
                       <label for="receiver-name">Name receiver</label>
-                      <input type="text" name="receiver-name" placeholder="Receivers name" v-model="formContentValues.receiverNameValue">
+                      <input type="text" name="receiver-name" placeholder="Receivers name" v-model="formContentValues.receiverNameValue" v-on:leave="leaveReceiverName">
 
                       <label for="e-mail">E-mail receiver</label>
                       <input type="email" name="e-mail" placeholder="example@gmail.com" v-model="formContentValues.emailValue">

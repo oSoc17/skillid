@@ -13,7 +13,7 @@ export default {
                 formHasErrors: false
 			},
             formContentElements:{
-                titles : ["Search", "Meta data", "Personalize"],
+                titles : ["Search", "Metadata", "Personalize"],
                 currentTitle: "Search",
                 buttonText: ["next", "next", "generate"],
                 currentButtonText: "Next"
@@ -37,38 +37,36 @@ export default {
 		}
 	},
 	methods: {
+        isValidEmail: function(email) {
+            //https://stackoverflow.com/questions/46155/how-to-validate-email-address-in-javascript
+            let re = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+            return re.test(email);
+        },
+        isValidWebsite: function(website){
+            //https://stackoverflow.com/questions/34488170/regular-expression-in-javascript-for-valid-domain-name
+            let re = new RegExp("^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$");
+            console.log(website);
+            return re.test(website);
+        },
+        hasIssuerName: function(issuerName){
+            return issuerName !== "";
+        },
+        hasReceiverName: function(receiverName){
+            return receiverName !== "";
+        },
+        hasDescriptionValue: function(descriptionValue){
+            return descriptionValue !== "";
+        },
 		isValidForm: function(){
-			function isValidEmail(email) {
-				//https://stackoverflow.com/questions/46155/how-to-validate-email-address-in-javascript
-				let re = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
-				return re.test(email);
-			}
-			function isValidWebsite(website){
-				//https://stackoverflow.com/questions/34488170/regular-expression-in-javascript-for-valid-domain-name
-				let re = new RegExp("^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$");
-				console.log(website);
-				return re.test(website);
-			}
-			function hasIssuerName(issuerName){
-				return issuerName !== "";
-			}
-			function hasReceiverName(receiverName){
-				return receiverName !== "";
-			}
-			function hasDescriptionValue(descriptionValue){
-				return descriptionValue !== "";
-			}
-
-			//todo, change color?
-
-            this.formControlElements.formHasErrors =
-                isValidEmail(this.formContentValues.emailValue) &&
-			    isValidWebsite(this.formContentValues.websiteValue) &&
-                hasIssuerName(this.formContentValues.issuerNameValue) &&
-                hasReceiverName(this.formContentValues.receiverNameValue) &&
-                hasDescriptionValue(this.formContentValues.descriptionValue);
-			return this.formControlElements.formHasErrors;
+            return this.isValidEmail(this.formContentValues.emailValue) &&
+                this.isValidWebsite(this.formContentValues.websiteValue) &&
+                this.hasIssuerName(this.formContentValues.issuerNameValue) &&
+                this.hasReceiverName(this.formContentValues.receiverNameValue) &&
+                this.hasDescriptionValue(this.formContentValues.descriptionValue);
 	    },
+        leaveReceiverName: function(el){
+		    console.log(el);
+        },
 		getCorrectTag: function(href, nameChange){
             function broadestConcept(href, changeName){
                 fetch(href, {
