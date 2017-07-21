@@ -5,13 +5,13 @@
 
       <nav id="navigation">
         <ol class="nav-list">
-          <li v-bind:class="{actif: formControlElements.searchActif}">1. Search skill</li>
-          <li v-bind:class="{actif: formControlElements.metaDataActif}">2. Meta data</li>
-          <li v-bind:class="{actif: formControlElements.personalizeActif}">3. Personalize badge</li>
+          <li v-bind:class="{actif: formControlElements.searchActive}">1. Search skill</li>
+          <li v-bind:class="{actif: formControlElements.metaDataActive}">2. Meta data</li>
+          <li v-bind:class="{actif: formControlElements.personalizeActive}">3. Personalize badge</li>
         </ol>
       </nav>
 
-      <div class = "search-content" v-show='formControlElements.searchActif'>
+      <div class = "search-content" v-show='formControlElements.searchActive'>
         <label for="searchField">What are you looking for?</label>
         <div class="">
           <input class="searchField" type="text" name="searchField" v-model="searchValue"/>
@@ -24,7 +24,7 @@
         </ol>
       </div>
 
-      <div class="meta-data-content" v-show='formControlElements.metaDataActif'>
+      <div class="meta-data-content" v-show='formControlElements.metaDataActive'>
 
         <div class="meta-data-form-particle">
           <h2>Your info</h2>
@@ -62,30 +62,30 @@
         <label id="errorLabel" style="display: none">Didn't work</label>
       </div>
 
-      <div id="personalize-content" v-show='formControlElements.personalizeActif'>
+      <div id="personalize-content" v-show='formControlElements.personalizeActive'>
         <div class="personalize-content-labels">
-          <label v-on:click.prevent="changeStateInputField('imageInputActif')" for="company-logo">Add company logo <br><img class="label-icon" src="../assets/svg/company.svg" alt="" ></label>
+          <label v-on:click.prevent="changeStateInputField('imageInputActive')" for="company-logo">Add company logo <br><img class="label-icon" src="../assets/svg/company.svg" alt="" ></label>
           <label v-on:click.prevent="changeStateInputField('companyNameInput')" for="company-name">Add company name <br> <img class="label-icon" src="../assets/svg/company-name.svg" alt="" ></label>
           <label v-on:click.prevent="changeStateInputField('urlInput')" for="url">Add url to company logo <br><img class="label-icon" src="../assets/svg/url.svg" alt="" ></label>
           <label v-on:click.prevent="changeStateInputField('colorInput')" for="color">Change color<br><img class="label-icon" src="../assets/svg/color.svg" alt="" ></label>
         </div>
         <div class="personalize-content-inputs">
-          <div class="input-field" v-bind:class="{hiddenInput: imageInputActif}">
+          <div class="input-field" v-bind:class="{hiddenInput: formControlElements.imageInputActive}">
             <label for="company-logo">Company logo</label>
             <input  type="file" v-on:change="handleImage" id="image-input" name="company-logo" accept="image/png, image/jpeg, image/tiff, image/gif">
           </div>
 
-          <div class="input-field" v-bind:class="{hiddenInput: companyNameInput}">
+          <div class="input-field" v-bind:class="{hiddenInput: formControlElements.companyNameInput}">
             <label for="company-name">Company name</label>
             <input type="text" name="company-name">
           </div>
 
-          <div class="input-field" v-bind:class="{hiddenInput: urlInput}">
+          <div class="input-field" v-bind:class="{hiddenInput: formControlElements.urlInput}">
             <label for="url">Url</label>
             <input type="url" name="url">
           </div>
 
-          <div class="input-field" v-bind:class="{hiddenInput: colorInput}">
+          <div class="input-field" v-bind:class="{hiddenInput: formControlElements.colorInput}">
             <label for="color">Color</label>
             <input type="text" name="color">
           </div>
