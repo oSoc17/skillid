@@ -7,38 +7,162 @@ export default {
 				searchActive: true,
 				metaDataActive: false,
 				personalizeActive: false,
-                imageInputActive: true,
-                companyNameInput: true,
-                urlInput: true,
-                colorInput: true,
-                formHasErrors: false
+        imageInputActive: true,
+        companyNameInput: true,
+        urlInput: true,
+        colorInput: true,
+        formHasErrors: false
 			},
-            formContentElements:{
-                titles : ["Search", "Metadata", "Personalize"],
-                currentTitle: "Search",
-                buttonText: ["next", "next", "generate"],
-                currentButtonText: "Next"
-            },
-            formContentValues: {
-                websiteValue: "",
-                issuerNameValue: "",
-                receiverNameValue: "",
-                emailValue: "",
-                searchValue: "",
-                pickedSkill: "",
-                descriptionValue: "",
-                errors: ""
-            },
+      formContentElements:{
+        titles : ["Search", "Metadata", "Personalize"],
+        currentTitle: "Search",
+        buttonText: ["next", "next", "generate"],
+        currentButtonText: "Next",
+        searchNavLabel:"1. Search skill",
+        metaDataNavLabel:"2. Meta data",
+        personalizeNavLabel:"3. Personalize badge",
+        searchFieldLabel:"What are you looking for?",
+        searchButton:"Search",
+        issuerInfoLabel:"Your info",
+        issuerNameLabel: "Full name issuer",
+        websiteIssuerLabel: "Website url issuer",
+        receiverInfoLabel:"Receivers info",
+        receiverNameLabel:"Full name receiver",
+        receiverEmailLabel:"E-mail of the recipient",
+        whyLabel: "Why",
+        descriptionLabel: "Description why the recipient deserves the badge",
+        companyLogoLabel:"Add company logo",
+        companyNameLabel:"Add company name",
+        companyUrlLabel:"Add url to company logo",
+        changeColorLabel:"Change color",
+        logoLabel:"Company logo",
+        nameLabel:"Company name",
+        urlLabel:"Url",
+        colorLabel:"Color",
+        backLabel:"&#60; Back",
+      },
+      formContentValues: {
+        websiteValue: "",
+        issuerNameValue: "",
+        receiverNameValue: "",
+        emailValue: "",
+        searchValue: "",
+        pickedSkill: "",
+        descriptionValue: "",
+        errors: ""
+      },
 			clicks: 0,
 			searchResults: [],
 			badge: {},
 			nameBadge: "round_language",
 			firstHref: "",
-            count: 0,
+      count: 0,
 			locale: "en"
 		}
 	},
 	methods: {
+    changeLanguage: function(){
+      language={
+        en:{
+          searchNavLabel:"1. Search skill",
+          metaDataNavLabel:"2. Meta data",
+          personalizeNavLabel:"3. Personalize badge",
+          searchFieldLabel:"What are you looking for?",
+          searchButton:"Search",
+          issuerInfoLabel:"Your info",
+          issuerNameLabel: "Full name issuer",
+          websiteIssuerLabel: "Website url issuer",
+          receiverInfoLabel:"Receivers info",
+          receiverNameLabel:"Full name receiver",
+          receiverEmailLabel:"E-mail of the recipient",
+          whyLabel: "Why",
+          descriptionLabel: "Description why the recipient deserves the badge",
+          companyLogoLabel:"Add company logo",
+          companyNameLabel:"Add company name",
+          companyUrlLabel:"Add url to company logo",
+          changeColorLabel:"Change color",
+          logoLabel:"Company logo",
+          nameLabel:"Company name",
+          urlLabel:"Url",
+          colorLabel:"Color",
+          backLabel:"&#60; Back",
+          buttonText: ["next", "next", "generate"]
+        },
+        fr:{
+          searchNavLabel:"1. Recherche de la compétence",
+          metaDataNavLabel:"2. Meta données",
+          personalizeNavLabel:"3. Personalisation du badge",
+          searchFieldLabel:"Que cherchez vous?",
+          searchButton:"Recherche",
+          issuerInfoLabel:"Vos informations",
+          issuerNameLabel: "Nom complet de l'émetteur",
+          websiteIssuerLabel: "Url du site web de l'émetteur",
+          receiverInfoLabel:"Informations du destinataire",
+          receiverNameLabel:"Nom complet du destinataire",
+          receiverEmailLabel:"Courriel du destinataire",
+          whyLabel: "Pourquoi",
+          descriptionLabel: "Description pourquoi le destinataire mérite le badge",
+          companyLogoLabel:"Ajouter le logo de l'entreprise",
+          companyNameLabel:"Ajouter le nom de l'entreprise",
+          companyUrlLabel:"Ajouter l'url du logo de l'entreprise",
+          changeColorLabel:"Changer la couleur",
+          logoLabel:"Logo de l'entreprise",
+          nameLabel:"Nom de l'entreprise",
+          urlLabel:"Url",
+          colorLabel:"Couleur",
+          backLabel:"&#60; Précedent",
+          buttonText: ["suivant", "suivant", "Générer"]
+        },
+        nl:{
+          searchNavLabel:"1. Zoek skill",
+          metaDataNavLabel:"2. Meta data",
+          personalizeNavLabel:"3. Personalizeer badge",
+          searchFieldLabel:"Wat zoek je?",
+          searchButton:"Onderzoek",
+          issuerInfoLabel:"Uw info",
+          issuerNameLabel: "Naam issuer",
+          websiteIssuerLabel: "Website issuer",
+          receiverInfoLabel:"Ontvangers INFO",
+          receiverNameLabel:"Naam ontvanger",
+          receiverEmailLabel:"E-mail ontvanger",
+          whyLabel: "Waarom",
+          descriptionLabel: "Waarom verdient de ontvanger de badge?",
+          companyLogoLabel:"Voeg logo toe",
+          companyNameLabel:"Voeg bedrijfsnaam toe",
+          companyUrlLabel:"Voeg url naar logo toe",
+          changeColorLabel:"Pas kleur aan",
+          logoLabel:"Company logo",
+          nameLabel:"Bedrijfsnaam",
+          urlLabel:"Url",
+          colorLabel:"Kleurq",
+          backLabel:"&#60; Terug",
+          buttonText: ["Volgende", "Volgende", "genereren"]
+        }
+      }
+      this.formContentElements.searchNavLabel=language[this.locale].searchNavLabel
+      this.formContentElements.metaDataNavLabel=language[this.locale].metaDataNavLabel
+      this.formContentElements.personalizeNavLabel=language[this.locale].personalizeNavLabel
+      this.formContentElements.searchFieldLabel=language[this.locale].searchFieldLabel
+      this.formContentElements.searchButton=language[this.locale].searchButton
+      this.formContentElements.issuerInfoLabel=language[this.locale].issuerInfoLabel
+      this.formContentElements.issuerNameLabel=language[this.locale].issuerNameLabel
+      this.formContentElements.websiteIssuerLabel=language[this.locale].websiteIssuerLabel
+      this.formContentElements.receiverInfoLabel=language[this.locale].receiverInfoLabel
+      this.formContentElements.receiverNameLabel=language[this.locale].receiverNameLabel
+      this.formContentElements.receiverEmailLabel=language[this.locale].receiverEmailLabel
+      this.formContentElements.whyLabel=language[this.locale].whyLabel
+      this.formContentElements.descriptionLabel=language[this.locale].descriptionLabel
+      this.formContentElements.companyLogoLabel=language[this.locale].companyLogoLabel
+      this.formContentElements.companyNameLabel=language[this.locale].companyNameLabel
+      this.formContentElements.companyUrlLabel=language[this.locale].companyUrlLabel
+      this.formContentElements.changeColorLabel=language[this.locale].changeColorLabel
+      this.formContentElements.logoLabel=language[this.locale].logoLabel
+      this.formContentElements.nameLabel=language[this.locale].nameLabel
+      this.formContentElements.urlLabel=language[this.locale].urlLabel
+      this.formContentElements.colorLabel=language[this.locale].colorLabel
+      this.formContentElements.backLabel=language[this.locale].backLabel
+      this.formContentElements.buttonText=language[this.locale].buttonText
+    },
         isValidEmail: function(email) {
             //https://stackoverflow.com/questions/46155/how-to-validate-email-address-in-javascript
             let re = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
@@ -420,7 +544,7 @@ export default {
 		        this.firstHref=r._links.self.href;
 		        this.count++;
 	        }
-	        this.searchResults.push(r.title);
+	        this.formContentValues.searchResults.push(r.title);
 	    },
 		handleImage: function () {
 	        function getAverageColourAsRGB (img) {
@@ -500,7 +624,7 @@ export default {
                     }.bind(this);
                 }.bind(this))(stuff);
                 reader.readAsDataURL(file);
-            };
-	    }
-    }
+      };
+	  }
+  }
 }
