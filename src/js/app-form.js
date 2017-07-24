@@ -46,14 +46,15 @@ export default {
         emailValue: "",
         searchValue: "",
         pickedSkill: "",
+        pickedSkillHref: "",
         descriptionValue: "",
         errors: ""
       },
 			clicks: 0,
 			searchResults: [],
+      searchResultsHref: [],
 			badge: {},
 			nameBadge: "round_language",
-			firstHref: "",
       count: 0,
 			locale: "en"
 		}
@@ -83,7 +84,7 @@ export default {
           nameLabel:"Company name",
           urlLabel:"Url",
           colorLabel:"Color",
-          backLabel:"&#60; Back",
+          backLabel:"&#x25C0 Back",
           buttonText: ["next", "next", "generate"]
         },
         fr:{
@@ -108,7 +109,7 @@ export default {
           nameLabel:"Nom de l'entreprise",
           urlLabel:"Url",
           colorLabel:"Couleur",
-          backLabel:"&#60; Précedent",
+          backLabel:"&#x25C0 Précedent",
           buttonText: ["suivant", "suivant", "Générer"]
         },
         nl:{
@@ -133,7 +134,7 @@ export default {
           nameLabel:"Bedrijfsnaam",
           urlLabel:"Url",
           colorLabel:"Kleurq",
-          backLabel:"&#60; Terug",
+          backLabel:"&#x25C0 Terug",
           buttonText: ["Volgende", "Volgende", "genereren"]
         }
       }
@@ -161,59 +162,61 @@ export default {
       this.formContentElements.backLabel=language[this.locale].backLabel
       this.formContentElements.buttonText=language[this.locale].buttonText
     },
-    isValidEmail: function(email) {
-      //https://stackoverflow.com/questions/46155/how-to-validate-email-address-in-javascript
-      let re = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
-      return re.test(email);
-    },
-    isValidWebsite: function(website){
-      //https://stackoverflow.com/questions/34488170/regular-expression-in-javascript-for-valid-domain-name
-      let re = new RegExp("^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$");
-      console.log(website);
-      return re.test(website);
-    },
-    validateEmail: function(el){
-      if (!this.isValidEmail(this.formContentValues.emailValue)) {
-        el.srcElement.focus();
-        this.setError(true, "This is not a valid e-mailaddress");
-      } else {
-        this.setError(false, "");
+        validation: function(){
+      function validateEmail(email) {
+        //https://stackoverflow.com/questions/46155/how-to-validate-email-address-in-javascript
+        var re = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+        return re.test(email);
       }
-		},
-    validateWebsite: function(el){
-      if (!this.isValidWebsite(this.formContentValues.websiteValue)) {
-        this.setError(true, "This is not a valid website url");
-        el.srcElement.focus();
-      } else {
-        this.setError(false, "");
+      function validateWebsite(website){
+        //https://stackoverflow.com/questions/34488170/regular-expression-in-javascript-for-valid-domain-name
+        var re = new RegExp("^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$");
+        console.log(website);
+        return re.test(website);
       }
-    },
-    hasContent: function(el){
-      if (! el.srcElement.value.trim() ){
-        el.srcElement.focus();
-        this.setError(true, "This field is mandatory");
-      } else {
-        this.setError(false, "");
+      function validateIssuerName(issuerName){
+        return issuerName != "";
       }
-    },
-    setError: function(hasError, errortext){
-      this.formHasErrors = hasError;
-      this.formContentValues.errors = errortext;
-    },
-        /**
-         * todo change isValidForm into a valid function
-         * @returns {boolean}
-         */
-    isValidForm: function(){
-      return true;
+      function validateReceiverName(receiverName){
+        return receiverName != "";
+      }
+      function validateDescriptionValue(descriptionValue){
+        return descriptionValue != "";
+      }
+      var returnbool = true;
+      //todo, change color?
+      if (!validateEmail(this.formContentValues.emailValue)){
+        returnbool=false;
+      }
+      if (!validateWebsite(this.formContentValues.websiteValue)){
+        returnbool=false;
+      }
+      if (!validateIssuerName(this.formContentValues.receiverNameValue)){
+        returnbool=false;
+      }
+      if(!validateReceiverName(this.formContentValues.receiverNameValue)){
+        returnbool=false;
+      }
+      if(!validateDescriptionValue(this.formContentValues.descriptionValue)){
+        returnbool=false;
+      }
+      if(returnbool){
+        document.getElementById("errorLabel").style.display="none";
+        return true;
+      }
+      else{
+        document.getElementById("errorLabel").style.display="block";
+        return false;
+      }
     },
 		getCorrectTag: function(href, nameChange){
       function broadestConcept(href, changeName){
-        fetch(href, {
+      fetch(href, {
           method: "get"
         })
         .then(r => r.json())
         .then(result => {
+          console.log("entry");
           if(result){
             let res=result.title;
             if(res==="social interaction"){
@@ -252,19 +255,68 @@ export default {
 		submit: function (events) {
       if(this.clicks < 3) {
         this.clicks += 1;
-        this.formContentElements.currentTitle = this.formContentElements.titles[this.clicks];
-        this.formContentElements.currentButtonText = this.formContentElements.buttonText[this.clicks];
+        
         switch (this.clicks){
           case 1:
+            this.getCorrectTag(this.formContentValues.pickedSkillHref, function (x){
+            this.nameBadge=x;
+            document.getElementById("svgFile").style.visibility="visible";
+              document.getElementById(this.nameBadge).style.visibility="visible";
+            }.bind(this));
+            let resultStr;
+            if (this.formContentValues.pickedSkill){
+              resultStr= this.formContentValues.pickedSkill.split(" ");
+            }
+            else{
+              resultStr = this.formContentValues.searchValue;
+            }
+            let offset = resultStr.length % 3;
+            let string1 = "";
+            let string2 = "";
+            let string3 = "";
+            if (offset===1){
+              for (let i=0; i<(resultStr.length-offset)/3; i++){
+                string1+=resultStr[i]+" ";
+              }
+              for (let i=0; i<((resultStr.length-offset)/3)+1; i++){
+                string2+=resultStr[i+((resultStr.length-offset)/3)]+" ";
+              }
+              for (let i=0; i<(resultStr.length-offset)/3; i++){
+                if (resultStr.length>3){
+                  string3+=resultStr[i+1+(2*(resultStr.length-offset)/3)]+" ";
+                }
+              }
+            }
+            else if(offset===2){
+              for (let i=0; i<(1+((resultStr.length-offset)/3)); i++){
+                string1+=resultStr[i]+" ";
+              }
+              for (let i=0; i<(1+((resultStr.length-offset)/3)); i++){
+                string2+=resultStr[i+1+((resultStr.length-offset)/3)]+" ";
+              }
+              for (let i=0; i<((resultStr.length-offset)/3); i++){
+                if (resultStr.length>3){
+                  string3+=resultStr[i+2+(2*(resultStr.length-offset)/3)]+" ";
+                }
+              }
+            }
+            else {
+              for (let i=0; i<(resultStr.length-offset)/3; i++){
+                string1+=resultStr[i]+" ";
+              }
+              for (let i=0; i<((resultStr.length-offset)/3); i++){
+                string2+=resultStr[i+((resultStr.length-offset)/3)]+" ";
+              }
+              for (let i=0; i<(resultStr.length-offset)/3; i++){
+                string3+=resultStr[i+(2*(resultStr.length-offset)/3)]+" ";
+              }
+            }
+            document.getElementById("text1").textContent = string1;
+            document.getElementById("text2").textContent = string2;
+            document.getElementById("text3").textContent = string3;
             if (this.formContentValues.searchValue.length>3){
               this.toggleSearchActive();
               this.toggleMetaDataActive();
-              let href=this.firstHref;
-              this.getCorrectTag(href, function (x){
-                this.nameBadge=x;
-                document.getElementById("svgFile").style.visibility="visible";
-                document.getElementById(this.nameBadge).style.visibility="visible";
-              }.bind(this));
                             // todo let startpoint have focus
                             // this.$refs.startpoint.focus();
             }
@@ -273,7 +325,7 @@ export default {
             }
             break;
           case 2:
-            if(this.isValidForm()){
+            if(this.validation.bind(this)()){
               this.toggleMetaDataActive();
               this.togglePersonalizeActive();
             }
@@ -284,57 +336,14 @@ export default {
           default:
             this.clicks-=1;
             console.log("generation call");
-            this.generation().bind(this);
+            this.generation();
             break;
           }
+          this.formContentElements.currentTitle = this.formContentElements.titles[this.clicks];
+          this.formContentElements.currentButtonText = this.formContentElements.buttonText[this.clicks];
         } else {
           console.log("error in next");
         }
-        document.getElementById("text1").textContent = string1;
-        let resultStr= this.formContentValues.pickedSkill.split(" ");
-        let offset = resultStr.length % 3;
-        let string1 = "";
-        let string2 = "";
-        let string3 = "";
-        if (offset===1){
-          for (let i=0; i<(resultStr.length-offset)/3; i++){
-            string1+=resultStr[i]+" ";
-          }
-          for (let i=0; i<((resultStr.length-offset)/3)+1; i++){
-            string2+=resultStr[i+((resultStr.length-offset)/3)]+" ";
-          }
-          for (let i=0; i<(resultStr.length-offset)/3; i++){
-            if (resultStr.length>3){
-              string3+=resultStr[i+1+(2*(resultStr.length-offset)/3)]+" ";
-            }
-          }
-        }
-        else if(offset===2){
-          for (let i=0; i<(1+((resultStr.length-offset)/3)); i++){
-            string1+=resultStr[i]+" ";
-          }
-          for (let i=0; i<(1+((resultStr.length-offset)/3)); i++){
-            string2+=resultStr[i+1+((resultStr.length-offset)/3)]+" ";
-          }
-          for (let i=0; i<((resultStr.length-offset)/3); i++){
-            if (resultStr.length>3){
-              string3+=resultStr[i+2+(2*(resultStr.length-offset)/3)]+" ";
-            }
-          }
-        }
-        else {
-          for (let i=0; i<(resultStr.length-offset)/3; i++){
-            string1+=resultStr[i]+" ";
-          }
-          for (let i=0; i<((resultStr.length-offset)/3); i++){
-            string2+=resultStr[i+((resultStr.length-offset)/3)]+" ";
-          }
-          for (let i=0; i<(resultStr.length-offset)/3; i++){
-            string3+=resultStr[i+(2*(resultStr.length-offset)/3)]+" ";
-          }
-        }
-        document.getElementById("text2").textContent = string2;
-        document.getElementById("text3").textContent = string3;
 	  },
 		back: function () {
       if(this.clicks < 3 && this.clicks > 0) {
@@ -354,20 +363,15 @@ export default {
       }
 	  },
 		toggleSearchActive: function(){
-      console.log("data2");
 		    this.searchActive = !this.searchActive;
 	    },
 		toggleMetaDataActive: function () {
-      console.log("data");
 		    this.metaDataActive = !this.metaDataActive;
-        console.log(this.formContentElements.metaDataActive);
 	    },
 		togglePersonalizeActive: function() {
-      console.log("data1");
 		    this.personalizeActive = !this.personalizeActive;
 	    },
         toggleImageInputActive: function () {
-        console.log("dat");
             this.imageInputActive = !this.imageInputActive
         },
         toggleCompanyNameInput: function () {
@@ -441,7 +445,7 @@ export default {
         }
 
         //signingComplete.call(this);
-        let href= "http://esp-api-dev-0.10.0.cogni.zone/resource/skill?uri=http://data.europa.eu/esco/skill/3233330f-bb93-47ea-93b4-ed903d05d9f1&language=fr";
+        let href= this.formContentValues.pickedSkillHref;
         let assertionVar = uuidv4();
         let d = new Date();
         let date = d.toISOString();
@@ -514,6 +518,13 @@ export default {
     },
 		setPickedValue: function (event) {
       this.formContentValues.pickedSkill = event.currentTarget.innerHTML;
+      let position;
+      for (var i=0; i<this.searchResults.length; i++){
+        if (this.searchResults[i]==this.formContentValues.pickedSkill){
+          position=i;
+        };
+      };
+      this.formContentValues.pickedSkillHref = this.searchResultsHref[position];
       event.currentTarget.classList.toggle("actifLink");
 	  },
 		onChangeSearch: function () {
@@ -535,12 +546,10 @@ export default {
 		  });
 	  },
 		addNewElement: function (r) {
-	        if (this.count===0){
-		        this.firstHref=r._links.self.href;
-		        this.count++;
-	        }
-	        this.searchResults.push(r.title);
-	    },
+	    this.searchResults.push(r.title);
+      this.searchResultsHref.push(r._links.self.href);
+      this.count++;
+	  },
 		handleImage: function () {
 	    function getAverageColourAsRGB (img) {
         //https://gist.github.com/olvado/1048628
