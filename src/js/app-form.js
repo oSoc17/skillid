@@ -162,42 +162,42 @@ export default {
       this.formContentElements.backLabel=language[this.locale].backLabel
       this.formContentElements.buttonText=language[this.locale].buttonText
     },
-        validation: function(){
-      function validateEmail(email) {
+    isValidForm: function(){
+      function isValidEmail(email) {
         //https://stackoverflow.com/questions/46155/how-to-validate-email-address-in-javascript
         var re = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
         return re.test(email);
       }
-      function validateWebsite(website){
+      function isValidWebsite(website){
         //https://stackoverflow.com/questions/34488170/regular-expression-in-javascript-for-valid-domain-name
         var re = new RegExp("^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$");
         console.log(website);
         return re.test(website);
       }
-      function validateIssuerName(issuerName){
+      function isValidIssuerName(issuerName){
         return issuerName != "";
       }
-      function validateReceiverName(receiverName){
+      function isValidReceiverName(receiverName){
         return receiverName != "";
       }
-      function validateDescriptionValue(descriptionValue){
+      function isValidDescriptionValue(descriptionValue){
         return descriptionValue != "";
       }
       var returnbool = true;
       //todo, change color?
-      if (!validateEmail(this.formContentValues.emailValue)){
+      if (!isValidEmail(this.formContentValues.emailValue)){
         returnbool=false;
       }
-      if (!validateWebsite(this.formContentValues.websiteValue)){
+      if (!isValidWebsite(this.formContentValues.websiteValue)){
         returnbool=false;
       }
-      if (!validateIssuerName(this.formContentValues.receiverNameValue)){
+      if (!isValidIssuerName(this.formContentValues.receiverNameValue)){
         returnbool=false;
       }
-      if(!validateReceiverName(this.formContentValues.receiverNameValue)){
+      if(!isValidReceiverName(this.formContentValues.receiverNameValue)){
         returnbool=false;
       }
-      if(!validateDescriptionValue(this.formContentValues.descriptionValue)){
+      if(!isValidDescriptionValue(this.formContentValues.descriptionValue)){
         returnbool=false;
       }
       if(returnbool){
@@ -325,7 +325,7 @@ export default {
             }
             break;
           case 2:
-            if(this.validation.bind(this)()){
+            if(this.isValidForm.bind(this)()){
               this.toggleMetaDataActive();
               this.togglePersonalizeActive();
             }
