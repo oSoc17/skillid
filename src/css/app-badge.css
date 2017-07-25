@@ -1,15 +1,25 @@
 #app-badge-container {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  width: 40%;
+  text-align: right;
+  width: 30%;
+  background-color: rgba(143, 190, 100, .3);
+}
+
+#app-badge-container h1 {
+  color: #6FA53D;
+  padding-right: 1rem;
+  font-weight: normal;
 }
 
 #svgFile {
-  width: 33rem;
-  height: 33rem;
-  margin-top: 10rem;
+  width: 46rem;
+  height: 46rem;
+  -ms-transform: rotate(-7deg); /* IE 9 */
+  -webkit-transform: rotate(-7deg); /* Chrome, Safari, Opera */
+  transform: rotate(-7deg);
+  margin-left: -5rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
 }

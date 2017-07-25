@@ -1,0 +1,77 @@
+/* NAVIGATION */
+
+.line {
+  height:60px;
+  width:100%;
+  margin:auto;
+  border:1px solid #c3c3c3;
+  position:relative;
+  justify-content: space-between;
+}
+
+.btn {
+  justify-content: space-between;
+  height:100%;
+  width: 20%;
+  cursor:pointer;
+  position:relative;
+  background-color: #F5F6F6;
+}
+
+.text {
+  display:inline-block;
+  height:100%;
+  padding:0 5px;
+  box-sizing:border-box;
+  line-height:21px;
+}
+
+.arrow {
+  display:inline-block;
+  height:100%;
+  width:25px;
+  vertical-align:top;
+  overflow:hidden;
+  position:relative;
+}
+
+.arrow:before, .arrow:after {
+  content:'';
+  position:absolute;
+  top:50%;right:0;
+  width:200%;
+  height:100%;
+  box-sizing:border-box;
+  border-right:1px solid #c3c3c3;
+  -ms-transform-origin:top right;
+  -ms-transform:rotate(35deg);
+  -webkit-transform-origin:top right;
+  -webkit-transform:rotateZ(35deg);
+  transform-origin:top right;
+  transform:rotateZ(35deg);
+}
+
+.arrow:after {
+  top:auto;bottom:50%;
+  -ms-transform-origin:bottom right;
+  -ms-transform:rotate(325deg);
+  -webkit-transform-origin:bottom right;
+  -webkit-transform:rotateZ(325deg);
+  transform-origin:bottom right;
+  transform:rotateZ(325deg);
+}
+
+#navigation .active-step .step, #navigation .active-step .step-number {
+  color: #5aa0ed;
+}
+
+#navigation .nav-item .step-number {
+  text-transform: uppercase;
+  color: #D8D8D8;
+}
+
+#navigation .nav-item .step {
+  color: #98a0a1;
+  font-weight: 600;
+  font-size: 16px;
+}
