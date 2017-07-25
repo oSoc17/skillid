@@ -5,7 +5,7 @@
       <select v-model="locale" v-on:click.prevent="changeLanguage()">
         <option value="en">English</option>
         <option value="fr">Français</option>
-        <option value="nl">Netherland</option>
+        <option value="nl">Nederlands</option>
       </select>
 
       <nav id="navigation">
@@ -24,7 +24,7 @@
         </div>
   			<ol class="list">
           <li v-for="searchResult in searchResults">
-            {{ searchResult }}
+            <a href="#" v-on:click="setPickedValue">{{ searchResult }}</a>
           </li>
         </ol>
       </div>
@@ -36,10 +36,10 @@
 
           <div class="meta-data-form-particle-input">
             <label for="issuer-name">{{formContentElements.issuerNameLabel}}</label>
-      			<input type="text" name="issuer-name" v-model="formContentElements.issuerNameValue">
+      			<input type="text" name="issuer-name" v-model="formContentValues.issuerNameValue">
 
             <label for="website">{{formContentElements.websiteIssuerLabel}}</label>
-      			<input type="text" name="website" v-model="formContentElements.websiteValue">
+      			<input type="text" name="website" v-model="formContentValues.websiteValue">
           </div>
         </div>
 
@@ -48,10 +48,10 @@
 
           <div class="meta-data-form-particle-input">
             <label for="receiver-name">{{formContentElements.receiverNameLabel}}</label>
-      			<input type="text" name="receiver-name" v-model="formContentElements.receiverNameValue">
+      			<input type="text" name="receiver-name" v-model="formContentValues.receiverNameValue">
 
       			<label for="e-mail">{{formContentElements.receiverEmailLabel}}</label>
-      			<input type="email" name="e-mail" v-model="formContentElements.emailValue">
+      			<input type="email" name="e-mail" v-model="formContentValues.emailValue">
           </div>
         </div>
 
