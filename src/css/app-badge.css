@@ -4,7 +4,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: right;
   width: 30%;
-  background-color: rgba(143, 190, 100, .3);
+  background-color: rgb(143, 190, 100);
 }
 
 #app-badge-container h1 {
@@ -20,6 +20,6 @@
   -webkit-transform: rotate(-7deg); /* Chrome, Safari, Opera */
   transform: rotate(-7deg);
   margin-left: -5rem;
-  margin-top: 4rem;
-  margin-bottom: 4rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }

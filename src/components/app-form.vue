@@ -3,7 +3,7 @@
           <div id="search" class="column" v-show='formControlElements.searchActive'>
               <div>
                   <input class="search-input" type="text" name="searchField" v-model="formContentValues.searchValue" placeholder="Search for keywords, categories ..."/>
-                  <button @click="onChangeSearch" class="search-button" type="button" name="button">Search</button>
+                  <button @click.prevent="onChangeSearch" class="search-button" type="button" name="button">Search</button>
               </div>
 
               <ul class="list seach-results">
@@ -44,7 +44,7 @@
 
           <div class="column" :class="{hiddenInput: formControlElements.colorInput}">
             <label for="color">Adjust the background colour</label>
-            <input type="text" name="color">
+            <input class="color" type="color" name="color">
           </div>
         </div>
 

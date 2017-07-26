@@ -15,7 +15,8 @@ export default {
 				companyNameInput: true,
 				urlInput: true,
 				colorInput: true,
-				formHasErrors: false
+				formHasErrors: false,
+        showBadge: false
       }
     }
   },
@@ -28,6 +29,8 @@ export default {
   methods: {
 		nextStep: function (events) {
       if(this.formControlElements.searchActive == true){
+        this.formControlElements.showBadge = true;
+        console.log(this.formControlElements.showBadge);
         this.toggleSearchActive();
   			this.toggleIssuerDetailsActive();
       }else if(this.formControlElements.issuerDetailsActive == true) {

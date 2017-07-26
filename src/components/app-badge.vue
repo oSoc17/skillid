@@ -49,7 +49,7 @@
 </style>
 
 <template>
-  <div id="app-badge-container">
+  <div id="app-badge-container" v-show='formControlElements.showBadge'>
     <h1>Preview</h1>
 
     <svg class="svgFile" id="svgFile" version="1.1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"

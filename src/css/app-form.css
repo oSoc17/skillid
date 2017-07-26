@@ -2,6 +2,7 @@
   width: 70%;
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
   font-size: 12px;
+  height: 56rem;
 }
 
 #app-form h2 {
@@ -18,7 +19,7 @@
   background-color: transparent;
   border-style: none;
   color: #838DA5;
-  background-color: #F3F6F8;
+  background-color: #ffffff;
   padding: 1.5rem;
   border: 1.5px solid #838DA5;
   border-radius: 10px;
@@ -133,13 +134,22 @@
 
 #personalize .logo-input {
   height: 165px;
-  background-color: #F8FCFF;
+  background-color: #ffffff;
   border: 1.5px solid #ABB3C4;
   border-radius: 10px;
 }
 
 #personalize .logo-input #image-input {
   padding: 1rem;
+}
+
+#personalize .color {
+  width: 100%;
+  height: 6rem;
+  border-style:none;
+  border: 1px solid #ABB3C4;
+  border-radius: 10px;
+  background-color: #ffffff;
 }
 
 /* OVERVIEW */

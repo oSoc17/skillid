@@ -4,11 +4,20 @@
   <div id="container">
     <header class="column">
       <img class="logo" src="./assets/svg/logo.svg" width="90px" height="90px"/>
+      <div class="row space-between">
+        <div class="up-left-info column">
+          <a href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i> Return to library</a>
+          <h1>Create a Badge</h1>
+        </div>
 
-      <div class="up-left-info column">
-        <a href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i> Return to library</a>
-        <h1>Create a Badge</h1>
+        <div class="styled-select semi-square">
+          <select>
+            <option>English</option>
+            <option>Dutch</option>
+          </select>
+        </div>
       </div>
+
     </header>
 
     <main>
@@ -17,7 +26,7 @@
 
         <div class="row space-between">
           <app-form v-bind:form-control-elements="formControlElements" v-on:next-step="nextStep"></app-form>
-          <app-badge></app-badge>
+          <app-badge v-bind:form-control-elements="formControlElements"></app-badge>
         </div>
       </div>
     </main>

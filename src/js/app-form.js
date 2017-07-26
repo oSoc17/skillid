@@ -118,6 +118,8 @@ export default {
 			broadestConcept(href, nameChange);
 		},
 		submit: function (events) {
+			this.formContentValues.pickedSkill = event.currentTarget.innerHTML;
+			console.log(this.formContentValues.pickedSkill);
 			let href=this.firstHref;
 			this.getCorrectTag(href, function (x){
 				this.nameBadge=x;
@@ -125,7 +127,6 @@ export default {
 				document.getElementById(this.nameBadge).style.visibility="visible";
 					// todo let startpoint have focus
 					// this.$refs.startpoint.focus();
-				this.generation().bind(this);
 				document.getElementById("text1").textContent = string1;
 				let resultStr= this.formContentValues.pickedSkill.split(" ");
 				let offset = resultStr.length % 3;
@@ -186,7 +187,6 @@ export default {
 	},
 
 	generation: function (event){
-		console.log("generation");
 		function signingComplete(){
 			let encoder = new TextEncoder('utf-8');
 			function keyGeneration(resolve, reject){
