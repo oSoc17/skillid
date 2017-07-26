@@ -44,7 +44,7 @@ h1{
 
 #container header{
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 #container header .logo{
@@ -76,29 +76,3 @@ h1{
     width: 80%;
     background-color: #F9F9F9;
 }
-
-.styled-select {
-   background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
-   height: 29px;
-   overflow: hidden;
-   width: 100px;
-   align-self: center;
-}
-
-.styled-select select {
-   background: transparent;
-   border: none;
-   font-size: 14px;
-   height: 29px;
-   padding: 5px; /* If you add too much padding here, the options won't show in IE */
-   width: 268px;
-   color: white;
-}
-
-.semi-square {
-  border: 1px solid #ffffff;
-   -webkit-border-radius: 5px;
-   -moz-border-radius: 5px;
-   border-radius: 5px;
-}
-.blue select    { color: #fff; }

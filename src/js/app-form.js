@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-fetch';
 export default {
 	name: 'app-form',
 	props: ['formControlElements'],
@@ -11,11 +10,13 @@ export default {
 				emailValue: "",
 				searchValue: "",
 				pickedSkill: "",
+				pickedSkillHref: "",
 				descriptionValue: "",
 				errors: ""
 			},
 			clicks: 0,
 			searchResults: [],
+			searchResultsHref: [],
 			badge: {},
 			nameBadge: "round_language",
 			firstHref: "",
@@ -117,18 +118,28 @@ export default {
 			}
 			broadestConcept(href, nameChange);
 		},
+		setPickedValue: function (event) {
+			console.log("setting");
+      		this.formContentValues.pickedSkill = event.currentTarget.innerHTML;
+			console.log(this.formContentValues.pickedSkill)
+      		let position;
+      		for (var i=0; i<this.searchResults.length; i++){
+        		if (this.searchResults[i]==this.formContentValues.pickedSkill){
+          			position=i;
+        		};
+      		};
+      		this.formContentValues.pickedSkillHref = this.searchResultsHref[position];
+      		this.submit();
+	  	},
 		submit: function (events) {
-			this.formContentValues.pickedSkill = event.currentTarget.innerHTML;
-			console.log(this.formContentValues.pickedSkill);
-			let href=this.firstHref;
+			let href=this.formContentValues.pickedSkillHref;
+			console.log(href);
 			this.getCorrectTag(href, function (x){
 				this.nameBadge=x;
 				document.getElementById("svgFile").style.visibility="visible";
 				document.getElementById(this.nameBadge).style.visibility="visible";
-					// todo let startpoint have focus
-					// this.$refs.startpoint.focus();
-				document.getElementById("text1").textContent = string1;
 				let resultStr= this.formContentValues.pickedSkill.split(" ");
+				console.log(this.formContentValues.pickedSkill)
 				let offset = resultStr.length % 3;
 				let string1 = "";
 				let string2 = "";
@@ -168,8 +179,10 @@ export default {
 						string3+=resultStr[i+(2*(resultStr.length-offset)/3)]+" ";
 					}
 				}
+				document.getElementById("text1").textContent = string1;
 				document.getElementById("text2").textContent = string2;
 				document.getElementById("text3").textContent = string3;
+				this.submitSearch();
 			}.bind(this));
 		},
 
@@ -187,6 +200,7 @@ export default {
 	},
 
 	generation: function (event){
+		console.log("generation");
 		function signingComplete(){
 			let encoder = new TextEncoder('utf-8');
 			function keyGeneration(resolve, reject){
@@ -325,10 +339,7 @@ export default {
 		});
 	},
 	addNewElement: function (r) {
-		if (this.count===0){
-			this.firstHref=r._links.self.href;
-			this.count++;
-		}
+		this.searchResultsHref.push(r._links.self.href);
 		this.searchResults.push(r.title);
 	},
 	handleImage: function () {
