@@ -1,19 +1,8 @@
 export default {
 	name: 'app-form',
+	props: ['formControlElements'],
 	data() {
 		return {
-			formControlElements: {
-				searchActive: true,
-				issuerDetailsActive: false,
-				customizeActive: false,
-				receiverDetailsActive: false,
-				overviewActive: false,
-				imageInputActive: true,
-				companyNameInput: true,
-				urlInput: true,
-				colorInput: true,
-				formHasErrors: false
-			},
 			formContentValues: {
 				websiteValue: "",
 				issuerNameValue: "",
@@ -35,6 +24,9 @@ export default {
 	},
 
 	methods: {
+		submitSearch: function () {
+      this.$emit('next-step');
+    },
 		isValidEmail: function(email) {
 			//https://stackoverflow.com/questions/46155/how-to-validate-email-address-in-javascript
 			let re = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
@@ -125,12 +117,13 @@ export default {
 			broadestConcept(href, nameChange);
 		},
 
-		submitSearch: function (events) {
-			this.toggleSearchActive();
-			this.toggleIssuerDetailsActive();
-		},
+		// submitSearch: function (events) {
+		// 	this.toggleSearchActive();
+		// 	this.toggleIssuerDetailsActive();
+		// },
 
 		submit: function (events) {
+			console.log("in submit");
 			if(this.clicks < 3) {
 				this.clicks += 1;
 				switch (this.clicks){
@@ -218,23 +211,7 @@ export default {
 		document.getElementById("text2").textContent = string2;
 		document.getElementById("text3").textContent = string3;
 	},
-	toggleSearchActive: function(){
-		this.formControlElements.searchActive = !this.formControlElements.searchActive;
-	},
-	toggleIssuerDetailsActive: function () {
-		this.formControlElements.issuerDetailsActive = !this.formControlElements.issuerDetailsActive;
-	},
-	toggleCustomizeActive: function() {
-		this.formControlElements.customizeActive = !this.formControlElements.customizeActive;
-	},
 
-	toggleReceiverDetailsActive: function() {
-		this.formControlElements.receiverDetailsActive = !this.formControlElements.receiverDetailsActive;
-	},
-
-	toggleOverviewActive: function() {
-		this.formControlElements.overviewActive = !this.formControlElements.overviewActive;
-	},
 	toggleImageInputActive: function () {
 		this.formControlElements.imageInputActif = !this.formControlElements.imageInputActif
 	},

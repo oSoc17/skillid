@@ -13,10 +13,10 @@
 
     <main>
       <div class="content-container column">
-        <app-nav></app-nav>
+        <app-nav v-bind:form-control-elements="formControlElements"></app-nav>
 
         <div class="row space-between">
-          <app-form></app-form>
+          <app-form v-bind:form-control-elements="formControlElements" v-on:next-step="nextStep"></app-form>
           <app-badge></app-badge>
         </div>
       </div>

@@ -8,31 +8,30 @@
 
               <ul class="list seach-results">
                 <li class="search-result" v-for="searchResult in searchResults">
-                  <a href="#" @click="setPickedValue" @click.prevent="submitSearch">{{ searchResult }}</a>
+                  <a href="#" @click="setPickedValue" @click:prevent="submit" v-on:click="submitSearch">{{ searchResult }}</a>
                 </li>
               </ul>
           </div>
 
-          <div id="details-sender" v-show='formControlElements.metaDataActive'>
+          <div id="details-sender" v-show='formControlElements.issuerDetailsActive'>
             <h2>Details of the sender</h2>
             <div class="column">
               <label for="issuer-name">Your comapany name</label>
               <input ref="startpoint" type="text" name="issuer-name" placeholder="eg. ESCO Badges" v-model="formContentValues.issuerNameValue"  v-on:blur="hasContent">
 
               <label for="website">Your company URL</label>
-              <input type="text" name="website" placeholder="eg. https://www.badgebuilder.eu" v-model="formContentValues.websiteValue"  v-on:blur="validateWebsite">
+              <input type="text" name="website" placeholder="eg. www.badgebuilder.eu" v-model="formContentValues.websiteValue"  v-on:blur="validateWebsite">
             </div>
 
             <label id="errorLabel" v-show ='formControlElements.formHasErrors' v-text="formContentValues.errors"></label>
 
             <div class="buttons">
-              <button class="save-to-library"> Save to library</button>
-              <button class="save-and-award" @click.prevent="submit">Save & Award</button>
+              <button class="next-button" v-on:click="submitSearch">Next step</button>
             </div>
           </div>
 
 
-      <div id="personalize" v-show='formControlElements.personalizeActive'>
+      <div id="personalize" v-show='formControlElements.customizeActive'>
         <h2>Customization</h2>
         <div class="personalize-content-inputs">
           <div class="column" :class="{hiddenInput: formControlElements.imageInputActive}">
@@ -49,12 +48,13 @@
           </div>
         </div>
 
-        <div class="buttons">
-          <button @click.prevent="submit">Next</button>
+        <div class="buttons row space-between">
+          <button class="save-to-library"> Save badge & return to library</button>
+          <button class="save-and-award" v-on:click="submitSearch">Save & Award</button>
         </div>
       </div>
 
-      <div id="details-receiver" v-show='formControlElements.metaDataActive'>
+      <div id="details-receiver" v-show='formControlElements.receiverDetailsActive'>
         <h2>Details of the receiver</h2>
         <div class="column">
           <label for="receivers-name">Name of the receiver</label>
@@ -70,8 +70,31 @@
         <label id="errorLabel" v-show ='formControlElements.formHasErrors' v-text="formContentValues.errors"></label>
 
         <div class="buttons">
-          <button class="save-to-library"> Save to library</button>
-          <button class="save-and-award" @click.prevent="submit">Save & Award</button>
+          <button class="next-button" v-on:click="submitSearch">Next step</button>
+        </div>
+      </div>
+
+      <div id="overview" v-show='formControlElements.overviewActive'>
+        <h2>Overview</h2>
+        <div class="">
+          <h3>sender</h3>
+          <p>{{formContentValues.issuerNameValue}}</p>
+          <p>{{formContentValues.websiteValue}}</p>
+        </div>
+
+        <div class="">
+          <h3>Receiver</h3>
+          <p>{{formContentValues.receiverNameValue}}</p>
+          <p>{{formContentValues.emailValue}}</p>
+        </div>
+
+        <div class="">
+          <h3>Description</h3>
+          <p>{{formContentValues.descriptionValue}}</p>
+        </div>
+
+        <div class="buttons">
+          <button class="next-button" v-on:click="submitSearch">Next step</button>
         </div>
       </div>
 

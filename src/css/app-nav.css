@@ -61,7 +61,7 @@
   transform:rotateZ(325deg);
 }
 
-#navigation .active-step .step, #navigation .active-step .step-number {
+#navigation .active-step .nav-item .step, #navigation .active-step .nav-item .step-number {
   color: #5aa0ed;
 }
 

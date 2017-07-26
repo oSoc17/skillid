@@ -48,4 +48,5 @@
 </template>
 
 <style src="../css/app-nav.css"></style>
+<script src="../js/app.js"></script>
 <script src="../js/app-nav.js"></script>

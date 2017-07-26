@@ -18,9 +18,14 @@
   background-color: transparent;
   border-style: none;
   color: #838DA5;
+  background-color: #F3F6F8;
+  padding: 1.5rem;
+  border: 1.5px solid #838DA5;
+  border-radius: 10px;
+  font-size: 12px;
 }
 
-#app-form .buttons .save-and-award {
+#app-form .buttons .save-and-award, #app-form .buttons .next-button{
   background-color: #41b7fe;
   border-style: none;
   padding: 1.5rem;
@@ -86,7 +91,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 50%;
-  margin-top: 20%;
+  margin-top: 5%;
 }
 
 #details-sender input, #details-receiver input {
@@ -117,7 +122,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 50%;
-  margin-top: 20%;
+  margin-top: 5%;
 }
 
 #personalize label {
@@ -131,4 +136,8 @@
   background-color: #F8FCFF;
   border: 1.5px solid #ABB3C4;
   border-radius: 10px;
+}
+
+#personalize .logo-input #image-input {
+  padding: 1rem;
 }
