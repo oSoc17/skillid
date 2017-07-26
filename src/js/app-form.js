@@ -116,105 +116,64 @@ export default {
 			}
 			broadestConcept(href, nameChange);
 		},
-
-		// submitSearch: function (events) {
-		// 	this.toggleSearchActive();
-		// 	this.toggleIssuerDetailsActive();
-		// },
-
 		submit: function (events) {
-			console.log("in submit");
-			if(this.clicks < 3) {
-				this.clicks += 1;
-				switch (this.clicks){
-					case 1:
-					if (this.formContentValues.searchValue.length>3){
-						this.toggleSearchActive();
-						this.toggleMetaDataActive();
-
-						let href=this.firstHref;
-						this.getCorrectTag(href, function (x){
-							this.nameBadge=x;
-
-							document.getElementById("svgFile").style.visibility="visible";
-							document.getElementById(this.nameBadge).style.visibility="visible";
-						}.bind(this)
-					);
+			let href=this.firstHref;
+			this.getCorrectTag(href, function (x){
+				this.nameBadge=x;
+				document.getElementById("svgFile").style.visibility="visible";
+				document.getElementById(this.nameBadge).style.visibility="visible";
 					// todo let startpoint have focus
 					// this.$refs.startpoint.focus();
-				}
-				else{
-					this.clicks-=1;
-				}
-				break;
-				case 2:
-				if(this.isValidForm()){
-					this.toggleMetaDataActive();
-					this.togglePersonalizeActive();
-				} else {
-					this.clicks-=1;
-				}
-				break;
-				default:
-				this.clicks-=1;
-				console.log("generation call");
 				this.generation().bind(this);
-				break;
-			}
-		} else {
-			console.log("error in next");
-		}
-
-		document.getElementById("text1").textContent = string1;
-		let resultStr= this.formContentValues.pickedSkill.split(" ");
-		let offset = resultStr.length % 3;
-		let string1 = "";
-		let string2 = "";
-		let string3 = "";
-		if (offset===1){
-			for (let i=0; i<(resultStr.length-offset)/3; i++){
-				string1+=resultStr[i]+" ";
-			}
-			for (let i=0; i<((resultStr.length-offset)/3)+1; i++){
-				string2+=resultStr[i+((resultStr.length-offset)/3)]+" ";
-			}
-			for (let i=0; i<(resultStr.length-offset)/3; i++){
-				if (resultStr.length>3){
-					string3+=resultStr[i+1+(2*(resultStr.length-offset)/3)]+" ";
+				document.getElementById("text1").textContent = string1;
+				let resultStr= this.formContentValues.pickedSkill.split(" ");
+				let offset = resultStr.length % 3;
+				let string1 = "";
+				let string2 = "";
+				let string3 = "";
+				if (offset===1){
+					for (let i=0; i<(resultStr.length-offset)/3; i++){
+						string1+=resultStr[i]+" ";
+					}
+					for (let i=0; i<((resultStr.length-offset)/3)+1; i++){
+						string2+=resultStr[i+((resultStr.length-offset)/3)]+" ";
+					}
+					for (let i=0; i<(resultStr.length-offset)/3; i++){
+						if (resultStr.length>3){
+							string3+=resultStr[i+1+(2*(resultStr.length-offset)/3)]+" ";
+						}
+					}
+				}else if(offset===2){
+					for (let i=0; i<(1+((resultStr.length-offset)/3)); i++){
+						string1+=resultStr[i]+" ";
+					}
+					for (let i=0; i<(1+((resultStr.length-offset)/3)); i++){
+						string2+=resultStr[i+1+((resultStr.length-offset)/3)]+" ";
+					}
+					for (let i=0; i<((resultStr.length-offset)/3); i++){
+						if (resultStr.length>3){
+							string3+=resultStr[i+2+(2*(resultStr.length-offset)/3)]+" ";
+						}
+					}
+				}else {
+					for (let i=0; i<(resultStr.length-offset)/3; i++){
+						string1+=resultStr[i]+" ";
+					}
+					for (let i=0; i<((resultStr.length-offset)/3); i++){
+						string2+=resultStr[i+((resultStr.length-offset)/3)]+" ";
+					}
+					for (let i=0; i<(resultStr.length-offset)/3; i++){
+						string3+=resultStr[i+(2*(resultStr.length-offset)/3)]+" ";
+					}
 				}
-			}
-		}
-		else if(offset===2){
-			for (let i=0; i<(1+((resultStr.length-offset)/3)); i++){
-				string1+=resultStr[i]+" ";
-			}
-			for (let i=0; i<(1+((resultStr.length-offset)/3)); i++){
-				string2+=resultStr[i+1+((resultStr.length-offset)/3)]+" ";
-			}
-			for (let i=0; i<((resultStr.length-offset)/3); i++){
-				if (resultStr.length>3){
-					string3+=resultStr[i+2+(2*(resultStr.length-offset)/3)]+" ";
-				}
-			}
-		}
-		else {
-			for (let i=0; i<(resultStr.length-offset)/3; i++){
-				string1+=resultStr[i]+" ";
-			}
-			for (let i=0; i<((resultStr.length-offset)/3); i++){
-				string2+=resultStr[i+((resultStr.length-offset)/3)]+" ";
-			}
-			for (let i=0; i<(resultStr.length-offset)/3; i++){
-				string3+=resultStr[i+(2*(resultStr.length-offset)/3)]+" ";
-			}
-		}
-		document.getElementById("text2").textContent = string2;
-		document.getElementById("text3").textContent = string3;
-	},
+				document.getElementById("text2").textContent = string2;
+				document.getElementById("text3").textContent = string3;
+			}.bind(this));
+		},
 
-	toggleImageInputActive: function () {
-		this.formControlElements.imageInputActif = !this.formControlElements.imageInputActif
-	},
+		toggleImageInputActive: function () {
+			this.formControlElements.imageInputActif = !this.formControlElements.imageInputActif
+		},
 	toggleCompanyNameInput: function () {
 		this.formControlElements.companyNameInput = !this.formControlElements.companyNameInput
 	},
@@ -342,10 +301,6 @@ export default {
 				}
 			);
 		}.bind(this))
-	},
-	setPickedValue: function (event) {
-		this.formContentValues.pickedSkill = event.currentTarget.innerHTML;
-		event.currentTarget.classList.toggle("actifLink");
 	},
 	onChangeSearch: function () {
 		document.getElementById("svgFile").style.visibility="hidden";

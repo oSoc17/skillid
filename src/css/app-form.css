@@ -87,7 +87,7 @@
 
 /* COMPANY INPUT + RECEIVER INPUT*/
 
-#details-sender, #details-receiver {
+#details-sender, #details-receiver, #overview {
   margin-left: auto;
   margin-right: auto;
   width: 50%;

@@ -8,7 +8,7 @@
 
               <ul class="list seach-results">
                 <li class="search-result" v-for="searchResult in searchResults">
-                  <a href="#" @click="setPickedValue" @click:prevent="submit" v-on:click="submitSearch">{{ searchResult }}</a>
+                  <a href="#" @click.prevent="submit" v-on:click.prevent="submitSearch">{{ searchResult }}</a>
                 </li>
               </ul>
           </div>
@@ -26,7 +26,7 @@
             <label id="errorLabel" v-show ='formControlElements.formHasErrors' v-text="formContentValues.errors"></label>
 
             <div class="buttons">
-              <button class="next-button" v-on:click="submitSearch">Next step</button>
+              <button class="next-button" v-on:click.prevent="submitSearch">Next step</button>
             </div>
           </div>
 
@@ -50,7 +50,7 @@
 
         <div class="buttons row space-between">
           <button class="save-to-library"> Save badge & return to library</button>
-          <button class="save-and-award" v-on:click="submitSearch">Save & Award</button>
+          <button class="save-and-award" v-on:click.prevent="submitSearch">Save & Award</button>
         </div>
       </div>
 
@@ -70,7 +70,7 @@
         <label id="errorLabel" v-show ='formControlElements.formHasErrors' v-text="formContentValues.errors"></label>
 
         <div class="buttons">
-          <button class="next-button" v-on:click="submitSearch">Next step</button>
+          <button class="next-button" v-on:click.prevent="submitSearch">Next step</button>
         </div>
       </div>
 
@@ -94,7 +94,7 @@
         </div>
 
         <div class="buttons">
-          <button class="next-button" v-on:click="submitSearch">Next step</button>
+          <button class="next-button" v-on:click.prevent="submitSearch">Next step</button>
         </div>
       </div>
 
