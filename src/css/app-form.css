@@ -87,7 +87,7 @@
 
 /* COMPANY INPUT + RECEIVER INPUT*/
 
-#details-sender, #details-receiver, #overview {
+#details-sender, #details-receiver {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
@@ -140,4 +140,48 @@
 
 #personalize .logo-input #image-input {
   padding: 1rem;
+}
+
+/* OVERVIEW */
+
+#overview {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  color: #838DA5;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+}
+
+#overview .sender-info, #overview .receiver-info {
+  width: 50%;
+  border-bottom: 1px solid #ABB3C4;
+  padding-bottom: 1rem;
+}
+
+#overview .sender-info {
+  border-right: 1px solid #ABB3C4;
+}
+
+#overview .receiver-info {
+  padding-left: 1rem;
+}
+
+#overview .overview-inner {
+  background-color: #ffffff;
+  padding: 2rem;
+  border: 1px solid #ABB3C4;
+  border-radius: 10px;
+  margin-top: 2rem;
+}
+
+#overview .description {
+  padding-top: 2rem;
+}
+
+#overview h3 {
+  text-transform: uppercase;
+  color: #42B5FE;
+  padding-bottom: 1rem;
 }

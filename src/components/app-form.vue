@@ -64,7 +64,7 @@
           <input type="text" name="website" placeholder="eg. badgebuilder@gmail.com" v-model="formContentValues.emailValue"  v-on:blur="validateEmail">
 
           <label for="description">Description</label>
-          <textarea name="description" rows="8" cols="80" placeholder="Reason why the receiver deserves this badge."></textarea>
+          <textarea name="description" rows="8" cols="80" placeholder="Reason why the receiver deserves this badge." v-model="formContentValues.descriptionValue"></textarea>
         </div>
 
         <label id="errorLabel" v-show ='formControlElements.formHasErrors' v-text="formContentValues.errors"></label>
@@ -74,27 +74,28 @@
         </div>
       </div>
 
-      <div id="overview" v-show='formControlElements.overviewActive'>
+      <div id="overview" class="column" v-show='formControlElements.overviewActive'>
         <h2>Overview</h2>
-        <div class="">
-          <h3>sender</h3>
-          <p>{{formContentValues.issuerNameValue}}</p>
-          <p>{{formContentValues.websiteValue}}</p>
-        </div>
 
-        <div class="">
-          <h3>Receiver</h3>
-          <p>{{formContentValues.receiverNameValue}}</p>
-          <p>{{formContentValues.emailValue}}</p>
-        </div>
+        <div class="overview-inner">
+          <div class="row sender-receiver-info">
+            <div class="sender-info">
+              <h3>sender</h3>
+              <p>{{formContentValues.issuerNameValue}}</p>
+              <p>{{formContentValues.websiteValue}}</p>
+            </div>
 
-        <div class="">
-          <h3>Description</h3>
-          <p>{{formContentValues.descriptionValue}}</p>
-        </div>
+            <div class="receiver-info">
+              <h3>Receiver</h3>
+              <p>{{formContentValues.receiverNameValue}}</p>
+              <p>{{formContentValues.emailValue}}</p>
+            </div>
+          </div>
 
-        <div class="buttons">
-          <button class="next-button" v-on:click.prevent="submitSearch">Next step</button>
+          <div class="description">
+            <h3>Description</h3>
+            <p>{{formContentValues.descriptionValue}}</p>
+          </div>
         </div>
       </div>
 
