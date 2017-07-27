@@ -1,107 +1,105 @@
 <template>
-  <div id="form">
-    <form id="app-form" class="form">
-      <h1 class="form-title">{{ formContentElements.currentTitle }}</h1>
-      <select v-model="locale" v-on:click.prevent="changeLanguage()">
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-        <option value="nl">Nederlands</option>
-      </select>
+      <form id="app-form" class="form">
+          <div id="search" class="column" v-show='formControlElements.searchActive'>
+              <div>
+                  <input class="search-input" type="text" name="searchField" v-model="formContentValues.searchValue" v-bind:placeholder="formControlElements.placeholderSearch"/>
+                  <button @click.prevent="onChangeSearch" class="search-button" type="button" name="button">{{formControlElements.searchButton}}</button>
+              </div>
 
-      <nav id="navigation">
-        <ol class="nav-list">
-          <li v-bind:class="{actif: searchActive}">{{formContentElements.searchNavLabel}}</li>
-          <li v-bind:class="{actif: metaDataActive}">{{formContentElements.metaDataNavLabel}}</li>
-          <li v-bind:class="{actif: personalizeActive}">{{formContentElements.personalizeNavLabel}}</li>
-        </ol>
-      </nav>
-
-      <div class = "search-content" v-show='searchActive'>
-        <label for="searchField">{{formContentElements.searchFieldLabel}}</label>
-        <div class="">
-          <input class="searchField" type="text" name="searchField" v-model="formContentValues.searchValue" v-on:keyup="onChangeSearch">
-          <button class="search-button" type="button" name="button">{{formContentElements.searchButton}}</button>
-        </div>
-  			<ol class="list">
-          <li v-for="searchResult in searchResults">
-            <a href="#" v-on:click="setPickedValue">{{ searchResult }}</a>
-          </li>
-        </ol>
-      </div>
-
-      <div class="meta-data-content" v-show='metaDataActive'>
-
-        <div class="meta-data-form-particle">
-          <h2>{{formContentElements.issuerInfoLabel}}</h2>
-
-          <div class="meta-data-form-particle-input">
-            <label for="issuer-name">{{formContentElements.issuerNameLabel}}</label>
-      			<input type="text" name="issuer-name" v-model="formContentValues.issuerNameValue" v-on:blur="hasContent">
-
-            <label for="website">{{formContentElements.websiteIssuerLabel}}</label>
-      			<input type="text" name="website" v-model="formContentValues.websiteValue" v-on:blur="validateWebsite">
-          </div>
-        </div>
-
-        <div class="meta-data-form-particle">
-          <h2>{{formContentElements.receiverInfoLabel}}</h2>
-
-          <div class="meta-data-form-particle-input">
-            <label for="receiver-name">{{formContentElements.receiverNameLabel}}</label>
-      			<input type="text" name="receiver-name" v-model="formContentValues.receiverNameValue" v-on:blur="hasContent">
-      			<label for="e-mail">{{formContentElements.receiverEmailLabel}}</label>
-      			<input type="email" name="e-mail" v-model="formContentValues.emailValue" v-on:blur="validateEmail">
-          </div>
-        </div>
-
-        <div class="meta-data-form-particle">
-          <h2>{{formContentElements.whyLabel}}</h2>
-
-          <div class="meta-data-form-particle-input">
-            <label for="description">{{ formContentElements.descriptionLabel }}</label>
-      			<textarea class="description" name="description" rows="4" cols="50" v-model="formContentValues.descriptionValue" v-on:blur="hasContent"></textarea>
+              <ul class="list seach-results">
+                <li class="search-result" v-for="searchResult in searchResults">
+                  <a href="#" @click.prevent="setPickedValue">{{ searchResult }}</a>
+                </li>
+              </ul>
           </div>
 
-        </div>
-        <label id="errorLabel" style="display: none">Didn't work</label>
-      </div>
+          <div id="details-sender" v-show='formControlElements.issuerDetailsActive'>
+            <h2>{{formControlElements.issuerInfoLabel}}</h2>
+            <div class="column">
+              <label for="issuer-name">{{formControlElements.issuerNameLabel}}</label>
+              <input ref="startpoint" type="text" name="issuer-name" v-bind:placeholder="formControlElements.issuerNamePlaceholder" v-model="formContentValues.issuerNameValue"  v-on:blur="hasContent">
 
-      <div id="personalize-content" v-show='personalizeActive'>
-        <div class="personalize-content-labels">
-          <label v-on:click.prevent="changeStateInputField('imageInputActive')" for="company-logo">{{formContentElements.companyLogoLabel}} <br><img class="label-icon" src="../assets/svg/company.svg" alt="" ></label>
-          <label v-on:click.prevent="changeStateInputField('companyNameInput')" for="company-name">{{formContentElements.companyNameLabel}} <br> <img class="label-icon" src="../assets/svg/company-name.svg" alt="" ></label>
-          <label v-on:click.prevent="changeStateInputField('urlInput')" for="url">{{formContentElements.companyUrlLabel}} <br><img class="label-icon" src="../assets/svg/url.svg" alt="" ></label>
-          <label v-on:click.prevent="changeStateInputField('colorInput')" for="color">{{formContentElements.changeColorLabel}}<br><img class="label-icon" src="../assets/svg/color.svg" alt="" ></label>
-        </div>
+              <label for="website">{{formControlElements.issuerWebsiteLabel}}</label>
+              <input type="text" name="website" v-bind:placeholder="formControlElements.issuerWebsitePlaceholder" v-model="formContentValues.websiteValue"  v-on:blur="validateWebsite">
+            </div>
+
+            <label id="errorLabel" v-show ='formControlElements.formHasErrors' v-text="formContentValues.errors"></label>
+
+            <div class="buttons">
+              <button class="next-button" v-on:click.prevent="submitSearch">{{formControlElements.nextButton}}</button>
+            </div>
+          </div>
+
+
+      <div id="personalize" v-show='formControlElements.customizeActive'>
+        <h2>{{formControlElements.customizationLabel}}</h2>
         <div class="personalize-content-inputs">
-          <div class="input-field" v-bind:class="{hiddenInput: imageInputActive}">
-            <label for="company-logo">{{formContentElements.logoLabel}}</label>
-            <input  type="file" v-on:change="handleImage" id="image-input" name="company-logo" accept="image/png, image/jpeg, image/tiff, image/gif">
+          <div class="column" :class="{hiddenInput: formControlElements.imageInputActive}">
+            <label for="company-logo">{{formControlElements.companyLogoLabel}}</label>
+
+            <div class="logo-input">
+              <input  type="file" @change="handleImage" id="image-input" name="company-logo" accept="image/png, image/jpeg, image/tiff, image/gif">
+            </div>
           </div>
 
-          <div class="input-field" v-bind:class="{hiddenInput: companyNameInput}">
-            <label for="company-name">{{formContentElements.nameLabel}}</label>
-            <input type="text" name="company-name">
+          <div class="column" :class="{hiddenInput: formControlElements.colorInput}">
+            <label for="color">{{formControlElements.changeColorLabel}}</label>
+            <input class ="color" type="color" name="color" id="color-input" v-on:change.prevent="changeColor">
+          </div>
+        </div>
+
+        <div class="buttons row space-between">
+          <button class="save-to-library">{{formControlElements.saveLibraryLabel}}</button>
+          <button class="save-and-award" v-on:click.prevent="submitSearch">{{formControlElements.saveAwardLabel}}</button>
+        </div>
+      </div>
+
+      <div id="details-receiver" v-show='formControlElements.receiverDetailsActive'>
+        <h2>{{formControlElements.receiverInfoLabel}}</h2>
+        <div class="column">
+          <label for="receivers-name">{{formControlElements.receiverNameLabel}}</label>
+          <input ref="startpoint" type="text" name="issuer-name" v-bind:placeholder="formControlElements.issuerNamePlaceholder" v-model="formContentValues.receiverNameValue"  v-on:blur="hasContent">
+
+          <label for="website">{{formControlElements.receiverEmailLabel}}</label>
+          <input type="text" name="website" v-bind:placeholder="formControlElements.emailPlaceholder" v-model="formContentValues.emailValue"  v-on:blur="validateEmail">
+
+          <label for="description">{{formControlElements.descriptionLabel}}</label>
+          <textarea name="description" rows="8" cols="80" v-bind:placeholder="formControlElements.descriptionPlaceholder" v-model="formContentValues.descriptionValue"></textarea>
+        </div>
+
+        <label id="errorLabel" v-show ='formControlElements.formHasErrors' v-text="formContentValues.errors"></label>
+
+        <div class="buttons">
+          <button class="next-button" v-on:click.prevent="submitSearch">{{formControlElements.nextButton}}</button>
+        </div>
+      </div>
+
+      <div id="overview" class="column" v-show='formControlElements.overviewActive'>
+        <h2>{{formControlElements.overviewLabel}}</h2>
+
+        <div class="overview-inner">
+          <div class="row sender-receiver-info">
+            <div class="sender-info">
+              <h3>{{formControlElements.senderLabel}}</h3>
+              <p>{{formContentValues.issuerNameValue}}</p>
+              <p>{{formContentValues.websiteValue}}</p>
+            </div>
+
+            <div class="receiver-info">
+              <h3>{{formControlElements.receiverLabel}}</h3>
+              <p>{{formContentValues.receiverNameValue}}</p>
+              <p>{{formContentValues.emailValue}}</p>
+            </div>
           </div>
 
-          <div class="input-field" v-bind:class="{hiddenInput: urlInput}">
-            <label for="url">{{formContentElements.urlLabel}}</label>
-            <input type="url" name="url">
-          </div>
-
-          <div class="input-field" v-bind:class="{hiddenInput: colorInput}">
-            <label for="color">{{formContentElements.colorLabel}}</label>
-            <input type="text" name="color">
+          <div class="description">
+            <h3>{{formControlElements.descriptionLabel}}</h3>
+            <p>{{formContentValues.descriptionValue}}</p>
           </div>
         </div>
       </div>
 
-      <div class="buttons">
-        <button class="back-button" v-on:click.prevent="back"> {{formContentElements.backLabel}}</button>
-        <button v-on:click.prevent="submit">{{formContentElements.currentButtonText }}</button>
-      </div>
     </form>
-  </div>
 </template>
 
 <style src="../css/app-form.css"></style>
