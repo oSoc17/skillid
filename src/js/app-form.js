@@ -29,17 +29,28 @@ export default {
 		submitSearch: function () {
       this.$emit('next-step');
     },
+		/*
+		* Use Regex to verify that the email variable is an email
+		* @Return Boolean
+		* @Param email is the email checked.
+		*/
 		isValidEmail: function(email) {
 			//https://stackoverflow.com/questions/46155/how-to-validate-email-address-in-javascript
 			let re = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
 			return re.test(email);
 		},
+		/*
+		* Use Regex to verify that the website variable is a website URL.
+		* @Return Boolean
+		* @Param website is the website checked.
+		*/
 		isValidWebsite: function(website){
 			//https://stackoverflow.com/questions/34488170/regular-expression-in-javascript-for-valid-domain-name
 			let re = new RegExp("^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$");
 			console.log(website);
 			return re.test(website);
 		},
+		//Validate an entered email or print an error.
 		validateEmail: function(el){
 			if (!this.isValidEmail(this.formContentValues.emailValue)) {
 				el.srcElement.focus();
@@ -48,6 +59,11 @@ export default {
 				this.setError(false, "");
 			}
 		},
+		/**
+		* Validate an entered website or print an error.
+		* @Return void
+		* @Param el is the element in which the website has been entered
+		*/
 		validateWebsite: function(el){
 			if (!this.isValidWebsite(this.formContentValues.websiteValue)) {
 				this.setError(true, "This is not a valid website url");
@@ -56,6 +72,11 @@ export default {
 				this.setError(false, "");
 			}
 		},
+		/**
+		* Verify if the content entered is empty. If that's the case, print an error message.
+		* @Return void
+		* @Param el is the element in which the content has been entered.
+		*/
 		hasContent: function(el){
 			if (! el.srcElement.value.trim() ){
 				el.srcElement.focus();
@@ -64,6 +85,10 @@ export default {
 				this.setError(false, "");
 			}
 		},
+		/**
+		* Set an error message.
+		* @Return void
+		*/
 		setError: function(hasError, errortext){
 			this.formControlElements.formHasErrors = hasError;
 			this.formContentValues.errors = errortext;
@@ -75,7 +100,14 @@ export default {
 		isValidForm: function(){
 			return true;
 		},
-		getCorrectTag: function(href, nameChange){
+		/**
+		* Recursivelly go trough the ESCO tree until we get to one of the top level or one of the big five categories
+		* of the transversal skills. Put a log of the skill is if it isn't part of one of the five category
+		* @Return void.
+		* @nameChange is called upon getting to the top level or one of the big five categories (transversal skills)
+		* has been found.
+		*/
+		getCorrectTag: function(href, nameChange){	
 			function broadestConcept(href, changeName){
 				fetch(href, {
 					method: "get"
@@ -118,6 +150,11 @@ export default {
 			}
 			broadestConcept(href, nameChange);
 		},
+		/**
+		* Pick the skill clicked on (and the href to it) then call submit.
+		* @Return void.
+		* @Param event is the event created by the user having clicked upon on of the skills.
+		*/
 		setPickedValue: function (event) {
 			console.log("setting");
       		this.formContentValues.pickedSkill = event.currentTarget.innerHTML;
@@ -131,6 +168,10 @@ export default {
       		this.formContentValues.pickedSkillHref = this.searchResultsHref[position];
       		this.submit();
 	  	},
+		/**
+		* Call getCorrectTag with the chosen skill href and a callback that show the correct badge. 
+		* @Return void
+		*/
 		submit: function (events) {
 			let href=this.formContentValues.pickedSkillHref;
 			console.log(href);
@@ -185,22 +226,47 @@ export default {
 				this.submitSearch();
 			}.bind(this));
 		},
-
+		/**
+		* Toggle image input.
+		* @Return void.
+		*/
 		toggleImageInputActive: function () {
 			this.formControlElements.imageInputActif = !this.formControlElements.imageInputActif
 		},
+		/**
+		* Toggle company input.
+		* @Return void
+		*/
 	toggleCompanyNameInput: function () {
 		this.formControlElements.companyNameInput = !this.formControlElements.companyNameInput
 	},
+		/**
+		* Toggle URL input
+		* @Return void
+		*/
 	toggleUrlInput: function () {
 		this.formControlElements.urlInput = !this.formControlElements.urlInput
 	},
+		/**
+		* Toggle color iput.
+		* @Return void
+		*/
 	toggleColorInput: function () {
 		this.formControlElements.colorInput = !this.formControlElements.colorInput;
 	},
-
+	/**
+	* Generate a badge according to the openBadge 2.0 specification and the metadata entered. Also include a signing
+	* function. Then offer the possibility for the user to download that badge.
+	* @Return void.
+	* @Param event is the event upon the call.
+	*/
 	generation: function (event){
 		console.log("generation");
+		/**
+		* Implementation not finished. Sign data using the crypto module. Callback resolve or reject depending on
+		* success or failure
+		* @Return void
+		*/
 		function signingComplete(){
 			let encoder = new TextEncoder('utf-8');
 			function keyGeneration(resolve, reject){
@@ -239,6 +305,10 @@ export default {
 			}
 			console.log.bind(signing.call(this, "data"));
 		}
+		/**
+		* Use archimage level wizardry to create an UUID.
+		* @Return string.
+		*/
 		function uuidv4() {
 			//https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
 			return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
@@ -246,7 +316,7 @@ export default {
 			}
 
 			//signingComplete.call(this);
-			let href= "http://esp-api-dev-0.10.0.cogni.zone/resource/skill?uri=http://data.europa.eu/esco/skill/3233330f-bb93-47ea-93b4-ed903d05d9f1&language=fr";
+			let href= this.formContentValues.pickedSkillHref;
 			let assertionVar = uuidv4();
 			let d = new Date();
 			let date = d.toISOString();
@@ -254,10 +324,17 @@ export default {
 			let encodedData = window.btoa(unescape(encodeURIComponent(s)));
 			let imageURI = "data:image/svg+xml;base64,"+encodedData;
 
+			/**
+			* Buffer to string.
+			* @return String
+			*/
 			function ab2str(buf) {
 				return String.fromCharCode.apply(null, new Uint16Array(buf));
 			}
-
+			/**
+			* String to buffer
+			* @Return buffer
+			*/
 			function str2ab(str) {
 				//https://stackoverflow.com/questions/6965107/converting-between-strings-and-arraybuffers
 				let buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
@@ -269,6 +346,7 @@ export default {
 			}
 
 			let buf =str2ab(this.formContentValues.emailValue);
+			//hash indentity value.
 			crypto.subtle.digest("SHA-256", buf).then(function(resultHash){
 				let resHash=ab2str(resultHash);
 				fetch(href, {
@@ -317,6 +395,10 @@ export default {
 			);
 		}.bind(this))
 	},
+	/**
+	* Implement the search and show the result on the form.
+	* @Return void.
+	*/
 	onChangeSearch: function () {
 		document.getElementById("svgFile").style.visibility="hidden";
 		document.getElementById(this.nameBadge).style.visibility="hidden";
@@ -338,14 +420,27 @@ export default {
 			}
 		});
 	},
+	/**
+	* Add one skill to the data structures.
+	* @Return void
+	* @Param r is the skill found by the search.
+	*/
 	addNewElement: function (r) {
 		this.searchResultsHref.push(r._links.self.href);
 		this.searchResults.push(r.title);
 	},
+	/**
+	* Implement color change on user input.
+	* @Return void
+	*/
 	changeColor: function(){
 		let input = document.getElementById('color-input').value;
 		console.log(input);
 	},
+	/**
+	* Get the logo image and change the badge accordingly.
+	* @Return void.
+	*/
 	handleImage: function () {
 		function getAverageColourAsRGB (img) {
 			//https://gist.github.com/olvado/1048628
