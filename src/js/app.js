@@ -63,6 +63,11 @@ export default {
   },
 
   methods: {
+		/**
+		* Implement next button.
+		* @Return void.
+		* @Param event of clicked button.
+		*/
 		nextStep: function (events) {
       if(this.formControlElements.searchActive == true){
         this.formControlElements.showBadge=true;
@@ -79,6 +84,10 @@ export default {
         this.toggleOverviewActive();
       }
 		},
+	  /**
+	  * Change the language to the chosen one.
+	  * @Return void
+	  */
     changeLanguage: function(){
       language={
         en:{
@@ -190,53 +199,46 @@ export default {
         returnLibraryLabel:"Keer terug naar het overzicht",
         }
       }
-      this.formControlElements.placeholderSearch=language[this.formControlElements.locale].placeholderSearch;
-      this.formControlElements.searchButton=language[this.formControlElements.locale].searchButton;
-      this.formControlElements.issuerInfoLabel=language[this.formControlElements.locale].issuerInfoLabel;
-      this.formControlElements.issuerNameLabel=language[this.formControlElements.locale].issuerNameLabel;
-      this.formControlElements.websiteIssuerLabel=language[this.formControlElements.locale].websiteIssuerLabel;
-      this.formControlElements.issuerNamePlaceholder=language[this.formControlElements.locale].issuerNamePlaceholder;
-      this.formControlElements.issuerWebsitePlaceholder=language[this.formControlElements.locale].issuerWebsitePlaceholder;
-      this.formControlElements.nextButton=language[this.formControlElements.locale].nextButton;
-      this.formControlElements.customizationLabel=language[this.formControlElements.locale].customizationLabel;
-      this.formControlElements.receiverInfoLabel=language[this.formControlElements.locale].receiverInfoLabel;
-      this.formControlElements.receiverNameLabel=language[this.formControlElements.locale].receiverNameLabel;
-      this.formControlElements.receiverEmailLabel=language[this.formControlElements.locale].receiverEmailLabel;
-      this.formControlElements.emailPlaceholder=language[this.formControlElements.locale].emailPlaceholder;
-      this.formControlElements.companyLogoLabel=language[this.formControlElements.locale].companyLogoLabel;
-      this.formControlElements.changeColorLabel=language[this.formControlElements.locale].changeColorLabel;
-      this.formControlElements.saveLibraryLabel=language[this.formControlElements.locale].saveLibraryLabel;
-      this.formControlElements.saveAwardLabel=language[this.formControlElements.locale].saveAwardLabel;
-      this.formControlElements.descriptionLabel=language[this.formControlElements.locale].descriptionLabel;
-      this.formControlElements.descriptionPlaceholder=language[this.formControlElements.locale].descriptionPlaceholder;
-      this.formControlElements.step1Label=language[this.formControlElements.locale].step1Label;
-      this.formControlElements.step2Label=language[this.formControlElements.locale].step2Label;
-      this.formControlElements.step3Label=language[this.formControlElements.locale].step3Label;
-      this.formControlElements.step4Label=language[this.formControlElements.locale].step4Label;
-      this.formControlElements.step5Label=language[this.formControlElements.locale].step5Label;
-      this.formControlElements.stepEndorsement=language[this.formControlElements.locale].stepEndorsement;
-      this.formControlElements.stepDetails=language[this.formControlElements.locale].stepDetails;
-      this.formControlElements.stepCustomize=language[this.formControlElements.locale].stepCustomize;
-      this.formControlElements.stepAward=language[this.formControlElements.locale].stepAward;
-      this.formControlElements.stepOverview=language[this.formControlElements.locale].stepOverview;
-      this.formControlElements.overviewLabel=language[this.formControlElements.locale].overviewLabel;
-      this.formControlElements.senderLabel=language[this.formControlElements.locale].senderLabel;
-      this.formControlElements.receiverLabel=language[this.formControlElements.locale].receiverLabel;
-      this.formControlElements.createBadgeLabel=language[this.formControlElements.locale].createBadgeLabel;
-      this.formControlElements.returnLibraryLabel=language[this.formControlElements.locale].returnLibraryLabel;
+	    for(var obj in language[this.formControlElements.locale]){
+        if (language[this.formControlElements.locale].hasOwnProperty(obj)){
+          if(this.formControlElements.hasOwnProperty(obj)){
+            this.formControlElements[obj]=language[this.formControlElements.locale][obj];
+          }
+        }
+      }
     },
+	  /**
+	  * Toggle searchActive
+	  * @Reutrn void
+	  */
     toggleSearchActive: function(){
   		this.formControlElements.searchActive = !this.formControlElements.searchActive;
   	},
+	  /**
+	  * Toggle issuerDetailActive
+	  * @Return void
+	  */
   	toggleIssuerDetailsActive: function () {
   		this.formControlElements.issuerDetailsActive = !this.formControlElements.issuerDetailsActive;
   	},
+	  /**
+	  * Toggle customizeActive
+	  * @Return void
+	  */
   	toggleCustomizeActive: function() {
   		this.formControlElements.customizeActive = !this.formControlElements.customizeActive;
   	},
+	  /**
+	  * Toggle receiverDetailActive
+	  * @Return void
+	  */
   	toggleReceiverDetailsActive: function() {
   		this.formControlElements.receiverDetailsActive = !this.formControlElements.receiverDetailsActive;
   	},
+	  /**
+	  * Toggle overviewDetailActive
+	  * @Return void
+	  */
   	toggleOverviewActive: function() {
   		this.formControlElements.overviewActive = !this.formControlElements.overviewActive;
   	}
